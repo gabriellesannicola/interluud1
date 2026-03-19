@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQs — interluud</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream:       oklch(96.5% 0.012 85);
+      --parchment:   oklch(93%   0.018 82);
+      --ink:         oklch(20%   0.025 65);
+      --ink-soft:    oklch(42%   0.022 65);
+      --sienna:      oklch(52%   0.15  42);
+      --white:       oklch(99%   0.005 85);
+
+      --font-display: 'Cormorant', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      --pad: clamp(1.5rem, 5.5vw, 6.5rem);
+
+      --border: oklch(88% 0.016 82);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ────────────────────────────────── */
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      padding: 1.4rem var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: oklch(96.5% 0.012 85 / 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid oklch(89% 0.016 82);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-links a.nav-active { color: var(--ink); }
+
+    .nav-cta {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.09em !important;
+      color: var(--white) !important;
+      background: var(--ink);
+      padding: 0.6rem 1.4rem;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--sienna) !important; }
+
+    /* ── HERO ───────────────────────────────── */
+
+    .page-hero {
+      padding: 10rem var(--pad) clamp(4rem, 8vw, 8rem);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-hero-eyebrow {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .page-hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--sienna);
+    }
+
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 5.5vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      max-width: 18ch;
+    }
+
+    /* ── FAQ SECTION ────────────────────────── */
+
+    .faq-section {
+      padding: clamp(5rem, 9vw, 10rem) var(--pad);
+    }
+
+    .faq-group {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 0 5rem;
+      padding-bottom: clamp(3.5rem, 6vw, 6rem);
+      margin-bottom: clamp(3.5rem, 6vw, 6rem);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-group:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .faq-category {
+      padding-top: 0.3rem;
+    }
+
+    .faq-category-label {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      position: sticky;
+      top: calc(4.5rem + 1.4rem + 1.4rem);
+    }
+
+    .faq-items {
+      display: flex;
+      flex-direction: column;
+    }
+
+    details {
+      border-bottom: 1px solid var(--border);
+    }
+
+    details:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    details summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--ink);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary .faq-indicator {
+      font-family: var(--font-body);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--sienna);
+      line-height: 1;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+    }
+
+    details[open] summary .faq-indicator {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.35s ease;
+      opacity: 0;
+    }
+
+    details[open] .faq-answer {
+      max-height: 600px;
+      padding-bottom: 1.75rem;
+      opacity: 1;
+    }
+
+    .faq-answer p {
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 65ch;
+    }
+
+    /* ── CTA SECTION ────────────────────────── */
+
+    .cta-section {
+      background: var(--ink);
+      padding: clamp(5rem, 10vw, 12rem) var(--pad);
+    }
+
+    .cta-section .section-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2rem;
+    }
+
+    .cta-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      color: oklch(93% 0.012 85);
+      margin-bottom: 2rem;
+      max-width: 18ch;
+    }
+
+    .cta-section p {
+      font-size: clamp(0.93rem, 1.1vw, 1rem);
+      font-weight: 300;
+      line-height: 1.72;
+      color: oklch(55% 0.02 65);
+      max-width: 44ch;
+      margin-bottom: 3rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border: 1px solid oklch(45% 0.02 65);
+      background: transparent;
+      color: oklch(93% 0.012 85);
+      transition: background 0.22s, border-color 0.22s, color 0.22s;
+    }
+
+    .btn:hover {
+      background: var(--sienna);
+      border-color: var(--sienna);
+      color: var(--white);
+    }
+
+    .btn svg { transition: transform 0.22s; }
+    .btn:hover svg { transform: translateX(4px); }
+
+    /* ── FOOTER ─────────────────────────────── */
+
+    footer {
+      background: var(--ink);
+      padding: clamp(4rem, 8vw, 8rem) var(--pad) 2.5rem;
+      border-top: 1px solid oklch(26% 0.02 65);
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: oklch(92% 0.012 85);
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: oklch(48% 0.02 65);
+      max-width: 30ch;
+    }
+
+    .footer-col h4 {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: oklch(70% 0.018 65);
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-col a {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: oklch(48% 0.02 65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: oklch(85% 0.012 85); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-legal {
+      font-size: 0.76rem;
+      font-weight: 300;
+      color: oklch(40% 0.018 65);
+    }
+
+    .footer-mark {
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--sienna);
+    }
+
+    /* ── REVEAL ANIMATIONS ──────────────────── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.in { opacity: 1; transform: none; }
+
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+
+      .page-hero {
+        padding-top: 7.5rem;
+      }
+
+      .faq-group {
+        grid-template-columns: 1fr;
+        gap: 2rem 0;
+      }
+
+      .faq-category-label {
+        position: static;
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      details summary {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">interluud</a>
+  <ul class="nav-links">
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">Who We Are</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/faq" class="nav-active">FAQs</a></li>
+    <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="nav-cta">Book a consult</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <p class="page-hero-eyebrow reveal">FAQs</p>
+  <h1 class="reveal d1">Everything you might want to know before you begin.</h1>
+</header>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+
+  <!-- Category: About coaching -->
+  <div class="faq-group reveal">
+    <div class="faq-category">
+      <span class="faq-category-label">About coaching</span>
+    </div>
+    <div class="faq-items">
+
+      <details>
+        <summary>
+          What is coaching, and how is it different from therapy?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Coaching is forward-focused and action-oriented. It helps you navigate decisions, build clarity, and create a plan — rather than processing the past in a clinical context. Therapy explores why you feel the way you do; coaching focuses on what to do next. Many of our clients work with both a therapist and a coach simultaneously, and find the two practices complement each other well.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          I've never worked with a coach before. What should I expect?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Your first session is about understanding your situation — where you are, what's most pressing, and what you're hoping for. We won't rush into a plan until we've listened carefully. Sessions are 60 minutes, conducted by video call, and held weekly or bi-weekly depending on the package you choose.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Is coaching right for me if I'm not sure what I want to do?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Yes — in fact, that's one of the most common places our clients start. You don't need to have made any decisions to benefit from coaching. We often help people gain the clarity they need to make decisions in the first place.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- Category: Confidentiality & privacy -->
+  <div class="faq-group reveal">
+    <div class="faq-category">
+      <span class="faq-category-label">Confidentiality &amp; privacy</span>
+    </div>
+    <div class="faq-items">
+
+      <details>
+        <summary>
+          How confidential is this?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Completely. Everything discussed in sessions is confidential. We don't share information with third parties, including family members, legal representatives, or employers, without your explicit consent. Our only exception is if we believe there is a risk to your safety or someone else's — which we'd always discuss with you first.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Can my partner, ex-partner, or family member access information about my sessions?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>No. Your sessions are yours alone. No information about you is shared with anyone without your written consent.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- Category: Practical questions -->
+  <div class="faq-group reveal">
+    <div class="faq-category">
+      <span class="faq-category-label">Practical questions</span>
+    </div>
+    <div class="faq-items">
+
+      <details>
+        <summary>
+          Where do sessions take place?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>All sessions are conducted via secure video call. This means you can work with us from anywhere in the world, and at times that suit your schedule.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          How long is each session, and how often do we meet?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Sessions are 60 minutes. The frequency depends on your package — typically weekly for intensive support, bi-weekly for ongoing coaching. We'll agree a schedule that works for your life.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          How many sessions will I need?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>This varies significantly depending on your situation and goals. Some clients work with us for 6–8 weeks; others benefit from longer-term support across a transition that spans months. We'll discuss this honestly in your consultation and won't push you into a package that's longer than you need.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          What is the cancellation policy?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Sessions can be rescheduled with 48 hours' notice at no charge. Cancellations with less than 48 hours' notice are charged at 50% of the session fee.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- Category: Getting started -->
+  <div class="faq-group reveal">
+    <div class="faq-category">
+      <span class="faq-category-label">Getting started</span>
+    </div>
+    <div class="faq-items">
+
+      <details>
+        <summary>
+          What happens in the free consultation?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>It's a 30-minute call with Gabrielle. She'll ask you about your situation, what you're hoping to achieve, and how you work best. You'll also have time to ask anything you'd like to know about the process. At the end, if coaching feels like the right fit, she'll recommend the best package for your needs. There's no obligation to continue.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Do you work with men?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Yes. While many of our clients are women, we work with anyone navigating a significant relationship transition, regardless of gender.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Do you work with same-sex couples or non-traditional relationships?
+          <span class="faq-indicator" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Absolutely. Our approach is built around your specific situation — the form of the relationship doesn't change how we work.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <p class="section-tag reveal">Still have questions?</p>
+  <h2 class="reveal d1">The easiest answer is a conversation.</h2>
+  <p class="reveal d2">Book a free 30-minute consultation. We'll answer anything that's still unclear — and you'll leave with a much better sense of whether coaching is right for you right now.</p>
+  <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn reveal d3">
+    Book a free consultation
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <p class="footer-brand">interluud</p>
+      <p class="footer-tagline">Coaching for the space between who you were and who you're becoming.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">Who We Are</a></li>
+        <li><a href="/services">What We Do</a></li>
+        <li><a href="/faq">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Start here</h4>
+      <ul>
+        <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola">Book a consultation</a></li>
+        <li><a href="/contact">Get in touch</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-legal">&copy; 2025 interluud. All rights reserved.</p>
+    <div class="footer-mark" aria-hidden="true"></div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+
+  // Hero reveals on load
+  document.querySelectorAll('.page-hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), 80 + i * 130);
+  });
+</script>
+
+</body>
+</html>

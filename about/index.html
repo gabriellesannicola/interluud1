@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who We Are — interluud</title>
+  <meta name="description" content="interluud is a relationship transition coaching practice for high-achieving professionals, founded by Gabrielle San Nicola.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream:       oklch(96.5% 0.012 85);
+      --parchment:   oklch(93%   0.018 82);
+      --ink:         oklch(20%   0.025 65);
+      --ink-soft:    oklch(42%   0.022 65);
+      --sienna:      oklch(52%   0.15  42);
+      --white:       oklch(99%   0.005 85);
+
+      --font-display: 'Cormorant', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      --pad: clamp(1.5rem, 5.5vw, 6.5rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ────────────────────────────────── */
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      padding: 1.4rem var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: oklch(96.5% 0.012 85 / 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid oklch(89% 0.016 82);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.nav-active { color: var(--ink); }
+
+    .nav-cta {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.09em !important;
+      color: var(--white) !important;
+      background: var(--ink);
+      padding: 0.6rem 1.4rem;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--sienna) !important; }
+
+    /* ── PAGE HERO ──────────────────────────── */
+
+    .page-hero {
+      padding: 10rem var(--pad) clamp(4rem, 8vw, 8rem);
+      max-width: 72ch;
+    }
+
+    .page-eyebrow {
+      display: inline-block;
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2rem;
+    }
+
+    .page-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 5.5vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+    }
+
+    /* ── SECTION SHARED ─────────────────────── */
+
+    .section-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      padding-top: 0.6rem;
+    }
+
+    /* ── MISSION ────────────────────────────── */
+
+    .mission {
+      padding: clamp(5rem, 10vw, 11rem) var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 2.4fr;
+      gap: 4rem;
+      align-items: start;
+      border-top: 1px solid oklch(88% 0.016 82);
+    }
+
+    .mission-copy {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+
+    /* ── ABOUT GABRIELLE ────────────────────── */
+
+    .about-gabrielle {
+      padding: 0 var(--pad) clamp(5rem, 10vw, 11rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text .section-tag {
+      display: block;
+      margin-bottom: 2.2rem;
+    }
+
+    .about-name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .about-title {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2.5rem;
+    }
+
+    .about-bio {
+      font-size: clamp(0.93rem, 1.1vw, 1rem);
+      font-weight: 300;
+      line-height: 1.78;
+      color: var(--ink-soft);
+    }
+
+    .about-bio p + p {
+      margin-top: 1.4rem;
+    }
+
+    .about-photo {
+      background: var(--parchment);
+      height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-photo-label {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--sienna);
+    }
+
+    /* ── VALUES ─────────────────────────────── */
+
+    .values {
+      background: var(--ink);
+      padding: clamp(5rem, 10vw, 12rem) var(--pad);
+      color: var(--cream);
+    }
+
+    .values-hd {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
+    }
+
+    .values-hd .section-tag {
+      color: var(--sienna);
+      align-self: end;
+    }
+
+    .values-hd h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--cream);
+      letter-spacing: -0.015em;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .value {
+      padding: 0 3rem 0 0;
+      border-right: 1px solid oklch(32% 0.02 65);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .value:last-child { border-right: none; padding-right: 0; }
+    .value:not(:first-child) { padding-left: 3rem; }
+
+    .value-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 1.6vw, 1.55rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: oklch(92% 0.012 85);
+    }
+
+    .value-desc {
+      font-size: 0.86rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: oklch(55% 0.02 65);
+    }
+
+    /* ── CTA ────────────────────────────────── */
+
+    .cta {
+      padding: clamp(6rem, 12vw, 14rem) var(--pad);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.6rem;
+    }
+
+    .cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .cta-body {
+      font-size: clamp(0.93rem, 1.1vw, 1rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 44ch;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      transition: background 0.22s, border-color 0.22s;
+      margin-top: 0.6rem;
+    }
+
+    .btn:hover { background: var(--sienna); border-color: var(--sienna); }
+
+    .btn svg { transition: transform 0.22s; }
+    .btn:hover svg { transform: translateX(4px); }
+
+    /* ── FOOTER ─────────────────────────────── */
+
+    footer {
+      background: var(--ink);
+      padding: clamp(4rem, 8vw, 8rem) var(--pad) 2.5rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: oklch(92% 0.012 85);
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: oklch(48% 0.02 65);
+      max-width: 30ch;
+    }
+
+    .footer-col h4 {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: oklch(70% 0.018 65);
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-col a {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: oklch(48% 0.02 65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: oklch(85% 0.012 85); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-legal {
+      font-size: 0.76rem;
+      font-weight: 300;
+      color: oklch(40% 0.018 65);
+    }
+
+    .footer-mark {
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--sienna);
+    }
+
+    /* ── REVEAL ANIMATIONS ──────────────────── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.in { opacity: 1; transform: none; }
+
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+
+      .page-hero {
+        padding-top: 7.5rem;
+      }
+
+      .mission {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .about-gabrielle {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-photo {
+        height: 320px;
+        order: -1;
+      }
+
+      .values-hd {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .value {
+        padding: 2rem 0;
+        border-right: none;
+        border-bottom: 1px solid oklch(32% 0.02 65);
+      }
+
+      .value:last-child { border-bottom: none; }
+      .value:not(:first-child) { padding-left: 0; }
+
+      .footer-main { grid-template-columns: 1fr; gap: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">interluud</a>
+  <ul class="nav-links">
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about" class="nav-active">Who We Are</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/faq">FAQs</a></li>
+    <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="nav-cta">Book a consult</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <span class="page-eyebrow reveal">Who We Are</span>
+  <h1 class="page-headline reveal d1">Coaching built around the complexity of what you're going through.</h1>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <p class="section-tag reveal">Our mission</p>
+  <p class="mission-copy reveal d1">interluud exists for people who are used to solving hard problems — and have just encountered one they can't think their way through alone. We bring strategic clarity and human presence to the moments that matter most.</p>
+</section>
+
+<!-- ABOUT GABRIELLE -->
+<section class="about-gabrielle">
+  <div class="about-text">
+    <span class="section-tag reveal">The coach</span>
+    <h2 class="about-name reveal d1">Gabrielle San Nicola</h2>
+    <p class="about-title reveal d2">Founder &amp; Lead Coach</p>
+    <!-- Update with Gabrielle's actual bio -->
+    <div class="about-bio reveal d2">
+      <p>Gabrielle founded interluud after recognising a gap in support for high-achieving professionals navigating the end of significant relationships. Having witnessed firsthand how capable, driven people can become paralysed when their personal lives intersect with the relentless demands of their careers, she built a practice designed specifically to meet that need — combining rigour with genuine human presence.</p>
+      <p>With a background in [coaching/psychology — placeholder], Gabrielle brings both structure and empathy to every engagement. She works exclusively with individuals on a one-to-one basis, believing that meaningful progress in this kind of transition requires unhurried attention, not a program. Her approach is direct, warm, and firmly grounded in what her clients actually need to move forward.</p>
+    </div>
+  </div>
+
+  <div class="about-photo reveal d1">
+    <span class="about-photo-label">Photo coming soon</span>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="values-hd">
+    <p class="section-tag reveal">What we believe</p>
+    <h2 class="reveal d1">The principles behind the practice.</h2>
+  </div>
+
+  <div class="values-grid">
+    <div class="value reveal">
+      <h3 class="value-name">Clarity before comfort</h3>
+      <p class="value-desc">We don't rush past the hard parts. We help you see your situation clearly, even when clarity is uncomfortable.</p>
+    </div>
+    <div class="value reveal d1">
+      <h3 class="value-name">Structure as care</h3>
+      <p class="value-desc">High achievers often need a framework, not just a listening ear. We provide both — in that order.</p>
+    </div>
+    <div class="value reveal d2">
+      <h3 class="value-name">Your pace, your terms</h3>
+      <p class="value-desc">There's no standard timeline for what you're going through. We meet you where you are.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2 class="reveal">Ready to start?</h2>
+  <p class="cta-body reveal d1">Book a free 30-minute consultation. No commitment — just a conversation.</p>
+  <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn reveal d2">
+    Book a free consultation
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <p class="footer-brand">interluud</p>
+      <p class="footer-tagline">Coaching for the space between who you were and who you're becoming.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">Who We Are</a></li>
+        <li><a href="/services">What We Do</a></li>
+        <li><a href="/faq">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Start here</h4>
+      <ul>
+        <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola">Book a consultation</a></li>
+        <li><a href="/contact">Get in touch</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-legal">© 2025 interluud. All rights reserved.</p>
+    <div class="footer-mark"></div> <!-- 1.4rem square, background: var(--sienna) -->
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+
+  // Hero reveals triggered immediately on load with stagger
+  document.querySelectorAll('.page-hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), 80 + i * 130);
+  });
+</script>
+
+</body>
+</html>

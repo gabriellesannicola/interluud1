@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — interluud</title>
+  <meta name="description" content="Writing on transition, identity, and what comes next. Perspectives from interluud's relationship transition coaching practice.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream:       oklch(96.5% 0.012 85);
+      --parchment:   oklch(93%   0.018 82);
+      --ink:         oklch(20%   0.025 65);
+      --ink-soft:    oklch(42%   0.022 65);
+      --sienna:      oklch(52%   0.15  42);
+      --white:       oklch(99%   0.005 85);
+
+      --font-display: 'Cormorant', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      --pad: clamp(1.5rem, 5.5vw, 6.5rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ────────────────────────────────── */
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      padding: 1.4rem var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: oklch(96.5% 0.012 85 / 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid oklch(89% 0.016 82);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-links a.active { color: var(--ink); }
+
+    .nav-cta {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.09em !important;
+      color: var(--white) !important;
+      background: var(--ink);
+      padding: 0.6rem 1.4rem;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--sienna) !important; }
+
+    /* ── SHARED UTILITIES ───────────────────── */
+
+    .section-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+    }
+
+    .text-link {
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+      display: inline-block;
+    }
+
+    .text-link:hover { border-color: var(--sienna); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      transition: background 0.22s, border-color 0.22s;
+      cursor: pointer;
+    }
+
+    .btn:hover { background: var(--sienna); border-color: var(--sienna); }
+
+    /* ── PAGE HERO ──────────────────────────── */
+
+    .blog-hero {
+      padding: 10rem var(--pad) 5rem;
+      border-bottom: 1px solid oklch(88% 0.016 82);
+    }
+
+    .blog-hero .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2rem;
+    }
+
+    .blog-hero .eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--sienna);
+    }
+
+    .blog-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 5.5vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      max-width: 18ch;
+      margin-bottom: 2rem;
+    }
+
+    .blog-hero .hero-sub {
+      font-size: clamp(0.93rem, 1.1vw, 1.05rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 52ch;
+    }
+
+    /* ── FEATURED ARTICLE ───────────────────── */
+
+    .featured-wrap {
+      padding: clamp(4rem, 7vw, 8rem) var(--pad);
+      border-bottom: 1px solid oklch(88% 0.016 82);
+    }
+
+    .featured-label {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 2rem;
+    }
+
+    .featured-card {
+      background: var(--parchment);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+    }
+
+    .featured-content {
+      padding: clamp(2.5rem, 4vw, 4rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .featured-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .article-category {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      font-variant: small-caps;
+      text-transform: uppercase;
+      color: var(--sienna);
+    }
+
+    .featured-headline {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.18;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+
+    .featured-excerpt {
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 48ch;
+    }
+
+    .featured-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2.5rem;
+      margin-top: auto;
+      border-top: 1px solid oklch(86% 0.018 82);
+    }
+
+    .featured-date {
+      font-size: 0.76rem;
+      font-weight: 300;
+      color: var(--ink-soft);
+    }
+
+    .featured-image {
+      background: oklch(89% 0.02 82);
+      position: relative;
+    }
+
+    /* ── ARTICLE GRID ───────────────────────── */
+
+    .articles-wrap {
+      padding: clamp(4rem, 7vw, 8rem) var(--pad);
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-left: 1px solid oklch(88% 0.016 82);
+      border-top: 1px solid oklch(88% 0.016 82);
+    }
+
+    .article-card {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 2.25rem;
+      border-right: 1px solid oklch(88% 0.016 82);
+      border-bottom: 1px solid oklch(88% 0.016 82);
+      text-decoration: none;
+      color: inherit;
+      background: var(--cream);
+      border-top: 2px solid oklch(88% 0.016 82);
+      transition:
+        border-top-color 0.22s,
+        transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    /* Override the grid's border-top since we're using border-top as the accent */
+    .articles-grid {
+      border-top: none;
+    }
+
+    .article-card:hover {
+      border-top-color: var(--sienna);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px oklch(20% 0.025 65 / 0.07), 0 4px 12px oklch(20% 0.025 65 / 0.04);
+      z-index: 1;
+    }
+
+    .card-category {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 1rem;
+    }
+
+    .card-headline {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    .card-excerpt {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .card-date {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--ink-soft);
+      margin-top: auto;
+      padding-top: 1.5rem;
+    }
+
+    /* ── NEWSLETTER ─────────────────────────── */
+
+    .newsletter {
+      background: var(--ink);
+      padding: clamp(5rem, 10vw, 10rem) var(--pad);
+    }
+
+    .newsletter-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 8rem);
+      align-items: center;
+    }
+
+    .newsletter-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 1.5rem;
+    }
+
+    .newsletter h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.5vw, 4rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.15;
+      letter-spacing: -0.018em;
+      color: oklch(92% 0.012 85);
+      margin-bottom: 0;
+    }
+
+    .newsletter-body {
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      font-weight: 300;
+      line-height: 1.72;
+      color: oklch(52% 0.02 65);
+      max-width: 44ch;
+      margin-bottom: 2.25rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 0.9rem 1.25rem;
+      background: var(--white);
+      border: 1px solid oklch(40% 0.02 65);
+      border-right: none;
+      border-radius: 0;
+      color: var(--ink);
+      outline: none;
+      min-width: 0;
+    }
+
+    .newsletter-input::placeholder {
+      color: var(--ink-soft);
+    }
+
+    .newsletter-input:focus {
+      border-color: oklch(55% 0.02 65);
+    }
+
+    .newsletter-btn {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.75rem;
+      background: oklch(28% 0.025 65);
+      color: oklch(92% 0.012 85);
+      border: 1px solid oklch(40% 0.02 65);
+      border-radius: 0;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.22s, border-color 0.22s;
+    }
+
+    .newsletter-btn:hover {
+      background: var(--sienna);
+      border-color: var(--sienna);
+    }
+
+    .newsletter-note {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: oklch(40% 0.018 65);
+      margin-top: 1rem;
+    }
+
+    /* ── FOOTER ─────────────────────────────── */
+
+    footer {
+      background: var(--ink);
+      padding: clamp(4rem, 8vw, 8rem) var(--pad) 2.5rem;
+      border-top: 1px solid oklch(28% 0.02 65);
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: oklch(92% 0.012 85);
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: oklch(48% 0.02 65);
+      max-width: 30ch;
+    }
+
+    .footer-col h4 {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: oklch(70% 0.018 65);
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-col a {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: oklch(48% 0.02 65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: oklch(85% 0.012 85); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-legal {
+      font-size: 0.76rem;
+      font-weight: 300;
+      color: oklch(40% 0.018 65);
+    }
+
+    .footer-mark {
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--sienna);
+    }
+
+    /* ── REVEAL ANIMATIONS ──────────────────── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.in { opacity: 1; transform: none; }
+
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+
+      .blog-hero {
+        padding-top: 7.5rem;
+      }
+
+      .featured-card {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-image {
+        min-height: 220px;
+        order: -1;
+      }
+
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .article-card {
+        border-right: 1px solid oklch(88% 0.016 82);
+      }
+
+      .newsletter-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .newsletter-input {
+        border-right: 1px solid oklch(40% 0.02 65);
+        border-bottom: none;
+      }
+
+      .newsletter-btn {
+        border-left: 1px solid oklch(40% 0.02 65);
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">interluud</a>
+  <ul class="nav-links">
+    <li><a href="/blog" class="active">Blog</a></li>
+    <li><a href="/about">Who We Are</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/faq">FAQs</a></li>
+    <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="nav-cta">Book a consult</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="blog-hero">
+  <p class="eyebrow reveal">Perspectives</p>
+  <h1 class="reveal d1">On transition, identity, and what comes next.</h1>
+  <p class="hero-sub reveal d2">Writing on the experiences that bring people to interluud — and on what we've learned from walking through them together.</p>
+</section>
+
+<!-- FEATURED ARTICLE -->
+<section class="featured-wrap">
+  <p class="featured-label reveal">Featured</p>
+  <!-- Link to actual article URL when blog is live -->
+  <a href="#" class="featured-card reveal d1" style="text-decoration: none; color: inherit; display: grid; grid-template-columns: 1fr 1fr; min-height: 420px;">
+    <div class="featured-content">
+      <div class="featured-meta">
+        <span class="article-category">Divorce &amp; Separation</span>
+        <h2 class="featured-headline">The decisions you make in the first 90 days matter more than you think</h2>
+        <p class="featured-excerpt">When a relationship ends, there's a window — urgent, disorienting, and full of decisions that will shape everything that comes after. Here's how to navigate it without making choices you'll regret.</p>
+      </div>
+      <div class="featured-footer">
+        <span class="featured-date">March 2025</span>
+        <span class="text-link">Read more</span>
+      </div>
+    </div>
+    <div class="featured-image"></div>
+  </a>
+</section>
+
+<!-- ARTICLE GRID -->
+<section class="articles-wrap">
+  <div class="articles-grid">
+
+    <!-- Article 1 -->
+    <!-- Link to actual article URL -->
+    <a href="#" class="article-card reveal">
+      <span class="card-category">Identity</span>
+      <h3 class="card-headline">Who are you when the relationship is no longer part of the answer?</h3>
+      <p class="card-excerpt">For high-achievers, a relationship often becomes part of the professional and personal identity. Its ending isn't just emotional — it's an identity crisis. Here's how to begin rebuilding.</p>
+      <span class="card-date">February 2025</span>
+    </a>
+
+    <!-- Article 2 -->
+    <!-- Link to actual article URL -->
+    <a href="#" class="article-card reveal d1">
+      <span class="card-category">Co-Parenting</span>
+      <h3 class="card-headline">How to talk to your children about separation without making it worse</h3>
+      <p class="card-excerpt">What you say — and don't say — in the early weeks sets the tone for years of co-parenting. A framework for age-appropriate honesty.</p>
+      <span class="card-date">February 2025</span>
+    </a>
+
+    <!-- Article 3 -->
+    <!-- Link to actual article URL -->
+    <a href="#" class="article-card reveal d2">
+      <span class="card-category">Breakup Recovery</span>
+      <h3 class="card-headline">The myth of closure: why waiting for it is keeping you stuck</h3>
+      <p class="card-excerpt">Closure is something we give ourselves, not something that arrives. The sooner you stop waiting for it, the sooner you can move forward.</p>
+      <span class="card-date">January 2025</span>
+    </a>
+
+    <!-- Article 4 -->
+    <!-- Link to actual article URL -->
+    <a href="#" class="article-card reveal">
+      <span class="card-category">Divorce &amp; Separation</span>
+      <h3 class="card-headline">Working with a lawyer and a coach at the same time: why it helps</h3>
+      <p class="card-excerpt">Legal advice tells you what you can do. Coaching helps you decide what you should do. They're not the same thing — and both matter.</p>
+      <span class="card-date">January 2025</span>
+    </a>
+
+    <!-- Article 5 -->
+    <!-- Link to actual article URL -->
+    <a href="#" class="article-card reveal d1">
+      <span class="card-category">Identity</span>
+      <h3 class="card-headline">Rebuilding a social life after a long-term relationship ends</h3>
+      <p class="card-excerpt">When a relationship ends, so do shared friendships, shared routines, and shared identity. Starting over socially is harder than anyone admits.</p>
+      <span class="card-date">December 2024</span>
+    </a>
+
+    <!-- Article 6 -->
+    <!-- Link to actual article URL -->
+    <a href="#" class="article-card reveal d2">
+      <span class="card-category">Wellbeing</span>
+      <h3 class="card-headline">Why high-achievers are terrible at asking for help — and what to do about it</h3>
+      <p class="card-excerpt">The same drive that built your career may be the thing making your transition harder. On the counterintuitive skill of accepting support.</p>
+      <span class="card-date">December 2024</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <div class="reveal">
+      <p class="newsletter-tag">Stay close</p>
+      <h2>Writing worth reading,<br>when it matters.</h2>
+    </div>
+    <div class="reveal d1">
+      <p class="newsletter-body">We publish infrequently and intentionally — only when we have something genuinely useful to say. No noise.</p>
+      <!-- Connect to your email provider (Ghost, Mailchimp, etc.) -->
+      <form class="newsletter-form" onsubmit="return false;">
+        <input
+          type="email"
+          class="newsletter-input"
+          placeholder="Your email address"
+          autocomplete="email"
+          aria-label="Email address"
+        >
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p class="newsletter-note">No spam. Unsubscribe at any time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <p class="footer-brand">interluud</p>
+      <p class="footer-tagline">Coaching for the space between who you were and who you're becoming.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">Who We Are</a></li>
+        <li><a href="/services">What We Do</a></li>
+        <li><a href="/faq">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Start here</h4>
+      <ul>
+        <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola">Book a consultation</a></li>
+        <li><a href="/contact">Get in touch</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-legal">© 2025 interluud. All rights reserved.</p>
+    <div class="footer-mark"></div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+
+  // Hero reveals on load
+  document.querySelectorAll('.blog-hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), 80 + i * 130);
+  });
+</script>
+
+</body>
+</html>

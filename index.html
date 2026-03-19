@@ -3,908 +3,955 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Services — Interluud</title>
-  <meta name="description" content="Coaching services for high-achieving professionals navigating divorce, separation, breakup recovery, and co-parenting strategy.">
+  <title>interluud — Relationship Transition Coaching</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
-    /* ─── Design tokens ─────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     :root {
-      --cream:        oklch(96.5% 0.012 85);
-      --parchment:    oklch(93%   0.018 82);
-      --ink:          oklch(20%   0.025 65);
-      --ink-soft:     oklch(42%   0.022 65);
-      --sienna:       oklch(52%   0.15  42);
-      --white:        oklch(99%   0.005 85);
+      --cream:       oklch(96.5% 0.012 85);
+      --parchment:   oklch(93%   0.018 82);
+      --ink:         oklch(20%   0.025 65);
+      --ink-soft:    oklch(42%   0.022 65);
+      --sienna:      oklch(52%   0.15  42);
+      --sienna-pale: oklch(88%   0.05  42);
+      --white:       oklch(99%   0.005 85);
+
       --font-display: 'Cormorant', Georgia, serif;
       --font-body:    'DM Sans', system-ui, sans-serif;
-      --pad:          clamp(1.5rem, 5.5vw, 6.5rem);
+
+      --pad: clamp(1.5rem, 5.5vw, 6.5rem);
     }
 
-    /* ─── Reset ─────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--cream);
       color: var(--ink);
       font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
+    /* ── NAV ────────────────────────────────── */
 
-    /* ─── Nav ───────────────────────────────────────────────────── */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      inset: 0 0 auto;
       z-index: 100;
+      padding: 1.4rem var(--pad);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem var(--pad);
-      background: var(--cream);
-      border-bottom: 1px solid oklch(88% 0.014 82);
+      background: oklch(96.5% 0.012 85 / 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid oklch(89% 0.016 82);
     }
 
     .nav-logo {
       font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 400;
-      letter-spacing: 0.04em;
+      letter-spacing: -0.01em;
       color: var(--ink);
-      transition: opacity 0.2s;
+      text-decoration: none;
     }
 
-    .nav-logo:hover { opacity: 0.6; }
-
     .nav-links {
+      list-style: none;
       display: flex;
       align-items: center;
-      gap: 2.25rem;
+      gap: 2.5rem;
     }
 
     .nav-links a {
-      font-family: var(--font-body);
-      font-size: 0.875rem;
+      font-size: 0.78rem;
       font-weight: 400;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--ink-soft);
+      text-decoration: none;
       transition: color 0.2s;
     }
 
     .nav-links a:hover { color: var(--ink); }
 
-    /* Active state for Services */
-    .nav-links a[href="/services"] {
-      color: var(--ink);
-    }
-
     .nav-cta {
-      font-size: 0.8125rem !important;
+      font-size: 0.78rem !important;
       font-weight: 500 !important;
-      letter-spacing: 0.06em !important;
+      letter-spacing: 0.09em !important;
       color: var(--white) !important;
       background: var(--ink);
-      padding: 0.6rem 1.35rem;
-      border-radius: 2px;
-      transition: background 0.2s, opacity 0.2s !important;
+      padding: 0.6rem 1.4rem;
+      transition: background 0.2s !important;
     }
 
     .nav-cta:hover { background: var(--sienna) !important; }
 
-    @media (max-width: 860px) {
-      .nav-links { display: none; }
-    }
+    /* ── HERO ───────────────────────────────── */
 
-    /* ─── Scroll reveal ─────────────────────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ─── Page hero ─────────────────────────────────────────────── */
     .hero {
-      background: var(--cream);
-      padding-top: 10rem;
-      padding-bottom: 6rem;
-      padding-left: var(--pad);
-      padding-right: var(--pad);
+      min-height: 100svh;
+      padding: 9rem var(--pad) 5rem;
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      grid-template-rows: 1fr auto;
+      gap: 0 4rem;
+      align-items: end;
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero-inner {
-      max-width: 72rem;
-      margin: 0 auto;
+    /* background accent block */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 42%;
+      height: 78%;
+      background: var(--parchment);
+      z-index: 0;
     }
 
-    .eyebrow {
-      display: block;
-      font-family: var(--font-body);
+    .hero-text {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--sienna);
-      margin-bottom: 1.75rem;
+      margin-bottom: 2rem;
     }
 
-    .hero-headline {
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--sienna);
+    }
+
+    h1 {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 5.5vw, 6.5rem);
+      font-size: clamp(3.8rem, 6.2vw, 7.5rem);
       font-weight: 300;
-      line-height: 1.06;
-      letter-spacing: -0.01em;
+      line-height: 1.03;
+      letter-spacing: -0.025em;
       color: var(--ink);
-      max-width: 18ch;
-      margin-bottom: 2.25rem;
+      margin-bottom: 2rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--sienna);
     }
 
     .hero-sub {
-      font-family: var(--font-body);
-      font-size: clamp(1rem, 1.15vw, 1.125rem);
+      font-size: clamp(0.95rem, 1.15vw, 1.1rem);
       font-weight: 300;
+      line-height: 1.7;
       color: var(--ink-soft);
-      max-width: 50ch;
-      line-height: 1.75;
+      max-width: 40ch;
+      margin-bottom: 3rem;
     }
 
-    /* ─── Service sections ──────────────────────────────────────── */
-    .service-section {
-      padding: clamp(5rem, 9vw, 10rem) var(--pad);
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
 
-    .service-section--cream { background: var(--cream); }
-    .service-section--parchment { background: var(--parchment); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      transition: background 0.22s, border-color 0.22s;
+    }
 
-    .service-inner {
-      max-width: 72rem;
-      margin: 0 auto;
+    .btn:hover { background: var(--sienna); border-color: var(--sienna); }
+
+    .btn svg { transition: transform 0.22s; }
+    .btn:hover svg { transform: translateX(4px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: oklch(75% 0.02 65);
+    }
+
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: var(--white);
+      border-color: var(--ink);
+    }
+
+    .hero-side {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      padding: 2.25rem 2.5rem;
+      border-left: 3px solid var(--sienna);
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-card blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--ink);
+      margin-bottom: 1.1rem;
+    }
+
+    .testimonial-card cite {
+      font-style: normal;
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--sienna);
+    }
+
+    .hero-stats {
+      grid-column: 1;
+      grid-row: 2;
+      display: flex;
+      gap: clamp(2rem, 5vw, 5rem);
+      padding-top: 2.5rem;
+      border-top: 1px solid oklch(88% 0.016 82);
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 2.8vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-top: 0.3rem;
+      max-width: 16ch;
+    }
+
+    /* ── MARQUEE ────────────────────────────── */
+
+    .marquee-band {
+      background: var(--ink);
+      padding: 1rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      animation: scroll 28s linear infinite;
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.8rem;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 300;
+      color: oklch(85% 0.012 85);
+      padding-right: 1.8rem;
+    }
+
+    .marquee-sep {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--sienna);
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── STATEMENT ──────────────────────────── */
+
+    .statement {
+      padding: clamp(6rem, 12vw, 14rem) var(--pad);
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(3rem, 6vw, 8rem);
+      grid-template-columns: 1fr 2.4fr;
+      gap: 4rem;
       align-items: start;
     }
 
-    /* Alternate text side */
-    .service-section:nth-of-type(2n) .service-inner {
-      direction: rtl;
-    }
-
-    .service-section:nth-of-type(2n) .service-inner > * {
-      direction: ltr;
-    }
-
-    .service-number {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 5rem;
-      font-weight: 300;
-      color: var(--sienna);
-      opacity: 0.35;
-      line-height: 1;
-      margin-bottom: 1.5rem;
-      display: block;
-      letter-spacing: -0.02em;
-    }
-
-    .service-headline {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 3.5vw, 4rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.01em;
-    }
-
-    .service-tagline {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--sienna);
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-    }
-
-    .service-body {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--ink-soft);
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-    }
-
-    .service-body p + p {
-      margin-top: 1rem;
-    }
-
-    .service-includes-label {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
+    .section-tag {
+      font-size: 0.73rem;
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: 1.25rem;
+      color: var(--sienna);
+      padding-top: 0.6rem;
     }
 
-    .service-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 2.75rem;
-    }
-
-    .service-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 0.85rem;
-      font-family: var(--font-body);
-      font-size: 0.9375rem;
+    .statement-copy {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 3.6rem);
       font-weight: 300;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+
+    .statement-copy strong { font-weight: 500; }
+
+    /* ── SERVICES ───────────────────────────── */
+
+    .services {
+      padding: 0 var(--pad) clamp(6rem, 12vw, 14rem);
+    }
+
+    .services-hd {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid oklch(88% 0.016 82);
+    }
+
+    .services-intro {
+      font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+      font-weight: 300;
+      line-height: 1.7;
       color: var(--ink-soft);
-      line-height: 1.5;
+      max-width: 46ch;
+      align-self: end;
     }
 
-    .service-list li::before {
-      content: '—';
-      color: var(--sienna);
-      font-weight: 400;
-      flex-shrink: 0;
-    }
-
-    .service-aside {
-      padding-top: 1.5rem;
-    }
-
-    .service-aside-rule {
-      width: 2.5rem;
-      height: 1px;
-      background: var(--sienna);
-      margin-bottom: 2rem;
-      opacity: 0.5;
-    }
-
-    .service-aside-quote {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: clamp(1.35rem, 2vw, 1.75rem);
-      font-weight: 300;
-      color: var(--ink);
-      line-height: 1.5;
-      max-width: 28ch;
-    }
-
-    /* CTA button */
-    .btn {
-      display: inline-block;
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--ink);
-      padding: 0.85rem 2rem;
-      border-radius: 2px;
-      transition: background 0.2s;
-    }
-
-    .btn:hover { background: var(--sienna); }
-
-    .btn--ghost {
-      color: var(--ink);
-      background: transparent;
-      border: 1px solid var(--ink);
-    }
-
-    .btn--ghost:hover {
-      color: var(--white);
-      background: var(--ink);
-    }
-
-    @media (max-width: 860px) {
-      .service-inner {
-        grid-template-columns: 1fr;
-        direction: ltr;
-      }
-
-      .service-section:nth-of-type(2n) .service-inner {
-        direction: ltr;
-      }
-
-      .service-aside {
-        padding-top: 0;
-        border-top: 1px solid oklch(85% 0.015 82);
-        padding-top: 2rem;
-      }
-    }
-
-    /* ─── Divider line between services ────────────────────────── */
-    .service-divider {
-      width: 100%;
-      height: 1px;
-      background: oklch(88% 0.014 82);
-    }
-
-    /* ─── Pricing section ───────────────────────────────────────── */
-    .pricing-section {
-      background: var(--ink);
-      color: var(--white);
-      padding: clamp(5rem, 9vw, 10rem) var(--pad);
-    }
-
-    .pricing-inner {
-      max-width: 72rem;
-      margin: 0 auto;
-    }
-
-    .pricing-header {
-      margin-bottom: clamp(3rem, 5vw, 5rem);
-    }
-
-    .section-tag {
-      display: block;
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--sienna);
-      margin-bottom: 1.5rem;
-    }
-
-    .pricing-headline {
-      font-family: var(--font-display);
-      font-size: clamp(2.25rem, 3.5vw, 4rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--white);
-      letter-spacing: -0.01em;
-      margin-bottom: 1.5rem;
-      max-width: 22ch;
-    }
-
-    .pricing-body {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 300;
-      color: oklch(70% 0.018 75);
-      max-width: 55ch;
-      line-height: 1.75;
-    }
-
-    .pricing-tiers {
+    .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: oklch(30% 0.02 65);
-      border: 1px solid oklch(30% 0.02 65);
-      margin-bottom: 2.5rem;
     }
 
-    .pricing-tier {
-      background: oklch(22% 0.022 65);
-      padding: clamp(2rem, 3.5vw, 3rem);
+    .service {
+      padding: 0 2.5rem 0 0;
+      border-right: 1px solid oklch(88% 0.016 82);
       display: flex;
       flex-direction: column;
+      gap: 0.85rem;
     }
 
-    .tier-name {
+    .service:last-child { border-right: none; padding-right: 0; }
+    .service:not(:first-child) { padding-left: 2.5rem; }
+
+    .service-num {
       font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-size: 0.88rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--sienna);
+    }
+
+    .service-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 1.7vw, 1.65rem);
       font-weight: 400;
-      color: var(--white);
-      margin-bottom: 1rem;
+      line-height: 1.2;
+      color: var(--ink);
     }
 
-    .tier-desc {
-      font-family: var(--font-body);
-      font-size: 0.9rem;
+    .service-desc {
+      font-size: 0.88rem;
       font-weight: 300;
-      color: oklch(65% 0.018 75);
-      line-height: 1.6;
+      line-height: 1.65;
+      color: var(--ink-soft);
       flex: 1;
-      margin-bottom: 1.75rem;
     }
 
-    .tier-price {
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 2.5vw, 2.5rem);
-      font-weight: 300;
-      color: var(--white);
-      letter-spacing: -0.01em;
+    .text-link {
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+      align-self: start;
     }
 
-    .pricing-note {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 300;
-      color: oklch(55% 0.016 70);
-      line-height: 1.6;
-    }
+    .text-link:hover { border-color: var(--sienna); }
 
-    @media (max-width: 860px) {
-      .pricing-tiers {
-        grid-template-columns: 1fr;
-      }
-    }
+    /* ── PROCESS ────────────────────────────── */
 
-    /* ─── Process section ───────────────────────────────────────── */
-    .process-section {
+    .process {
       background: var(--ink);
-      color: var(--white);
-      padding: clamp(5rem, 9vw, 10rem) var(--pad);
-      border-top: 1px solid oklch(27% 0.02 65);
+      padding: clamp(5rem, 10vw, 12rem) var(--pad);
+      color: var(--cream);
     }
 
-    .process-inner {
-      max-width: 72rem;
-      margin: 0 auto;
+    .process-hd {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
     }
 
-    .process-header {
-      margin-bottom: clamp(3.5rem, 6vw, 6rem);
-    }
+    .process-hd .section-tag { color: var(--sienna); align-self: end; }
 
-    .process-headline {
+    .process-hd h2 {
       font-family: var(--font-display);
-      font-size: clamp(2.25rem, 3.5vw, 4rem);
+      font-size: clamp(2rem, 3vw, 3.2rem);
       font-weight: 300;
-      line-height: 1.1;
-      color: var(--white);
-      letter-spacing: -0.01em;
-      max-width: 20ch;
+      line-height: 1.2;
+      color: var(--cream);
+      letter-spacing: -0.015em;
     }
+
+    .process-hd h2 em { font-style: italic; }
 
     .process-steps {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: clamp(1.5rem, 3vw, 3rem);
     }
 
-    .process-step {
-      border-top: 1px solid oklch(32% 0.02 65);
-      padding-top: 2rem;
+    .step {
+      padding: 0 3rem 0 0;
+      border-right: 1px solid oklch(32% 0.02 65);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
     }
 
-    .step-numeral {
+    .step:last-child { border-right: none; padding-right: 0; }
+    .step:not(:first-child) { padding-left: 3rem; }
+
+    .step-n {
       font-family: var(--font-display);
-      font-style: italic;
-      font-size: 2rem;
+      font-size: 3.5rem;
       font-weight: 300;
+      font-style: italic;
+      line-height: 1;
       color: var(--sienna);
-      margin-bottom: 1.25rem;
-      display: block;
+      opacity: 0.55;
     }
 
-    .step-title {
+    .step-name {
       font-family: var(--font-display);
-      font-size: 1.35rem;
+      font-size: clamp(1.25rem, 1.6vw, 1.55rem);
       font-weight: 400;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-      line-height: 1.25;
+      line-height: 1.2;
+      color: oklch(92% 0.012 85);
     }
 
     .step-desc {
-      font-family: var(--font-body);
-      font-size: 0.875rem;
+      font-size: 0.86rem;
       font-weight: 300;
-      color: oklch(65% 0.018 75);
       line-height: 1.7;
+      color: oklch(55% 0.02 65);
     }
 
-    @media (max-width: 860px) {
-      .process-steps {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-    }
+    /* ── CONSULT ────────────────────────────── */
 
-    @media (max-width: 520px) {
-      .process-steps {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ─── CTA section ───────────────────────────────────────────── */
-    .cta-section {
-      background: var(--cream);
-      padding: clamp(5rem, 9vw, 10rem) var(--pad);
-    }
-
-    .cta-inner {
-      max-width: 72rem;
-      margin: 0 auto;
+    .consult {
+      padding: clamp(6rem, 12vw, 14rem) var(--pad);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: clamp(3rem, 6vw, 8rem);
-      align-items: end;
+      gap: 5rem;
+      align-items: center;
     }
 
-    .cta-headline {
+    .consult-lede {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 1.5rem;
+    }
+
+    .consult h2 {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 4vw, 5rem);
+      font-size: clamp(2.5rem, 4vw, 4.8rem);
       font-weight: 300;
       line-height: 1.08;
-      color: var(--ink);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.022em;
+      margin-bottom: 1.75rem;
     }
 
-    .cta-right {
-      padding-bottom: 0.5rem;
-    }
+    .consult h2 em { font-style: italic; }
 
-    .cta-body {
-      font-family: var(--font-body);
-      font-size: 1rem;
+    .consult-body {
+      font-size: clamp(0.93rem, 1.1vw, 1rem);
       font-weight: 300;
+      line-height: 1.72;
       color: var(--ink-soft);
-      line-height: 1.8;
-      max-width: 42ch;
-      margin-bottom: 2.25rem;
+      max-width: 40ch;
+      margin-bottom: 2.5rem;
     }
 
-    @media (max-width: 860px) {
-      .cta-inner {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
+    .consult-card {
+      background: var(--parchment);
+      padding: 3rem;
     }
 
-    /* ─── Footer ────────────────────────────────────────────────── */
-    footer {
-      background: oklch(17% 0.022 65);
-      color: oklch(65% 0.016 75);
-      padding: clamp(3rem, 5vw, 5rem) var(--pad);
-    }
-
-    .footer-inner {
-      max-width: 72rem;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: clamp(2rem, 4vw, 5rem);
-      padding-bottom: clamp(2.5rem, 4vw, 4rem);
-      border-bottom: 1px solid oklch(26% 0.018 65);
+    .consult-card-lede {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
       margin-bottom: 2rem;
     }
 
-    .footer-brand .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      color: var(--white);
+    .consult-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .consult-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    .consult-list li::before {
+      content: '';
       display: block;
-      margin-bottom: 1rem;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--sienna);
+      margin-top: 0.72rem;
+      flex-shrink: 0;
+    }
+
+    .consult-note {
+      font-size: 0.76rem;
+      font-style: italic;
+      color: var(--ink-soft);
+      padding-top: 1.5rem;
+      border-top: 1px solid oklch(87% 0.016 82);
+    }
+
+    /* ── FOOTER ─────────────────────────────── */
+
+    footer {
+      background: var(--ink);
+      padding: clamp(4rem, 8vw, 8rem) var(--pad) 2.5rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: oklch(92% 0.012 85);
+      margin-bottom: 0.85rem;
     }
 
     .footer-tagline {
-      font-family: var(--font-body);
-      font-size: 0.875rem;
+      font-size: 0.88rem;
       font-weight: 300;
-      color: oklch(55% 0.016 70);
-      line-height: 1.65;
-      max-width: 28ch;
+      line-height: 1.6;
+      color: oklch(48% 0.02 65);
+      max-width: 30ch;
     }
 
-    .footer-col-label {
-      font-family: var(--font-body);
-      font-size: 0.7rem;
+    .footer-col h4 {
+      font-size: 0.73rem;
       font-weight: 500;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: oklch(50% 0.014 68);
-      margin-bottom: 1.25rem;
+      color: oklch(70% 0.018 65);
+      margin-bottom: 1.4rem;
     }
 
-    .footer-links {
+    .footer-col ul {
+      list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.7rem;
     }
 
-    .footer-links a {
-      font-family: var(--font-body);
-      font-size: 0.875rem;
+    .footer-col a {
+      font-size: 0.86rem;
       font-weight: 300;
-      color: oklch(62% 0.016 72);
+      color: oklch(48% 0.02 65);
+      text-decoration: none;
       transition: color 0.2s;
     }
 
-    .footer-links a:hover { color: var(--white); }
+    .footer-col a:hover { color: oklch(85% 0.012 85); }
 
     .footer-bottom {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
     }
 
     .footer-legal {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 300;
-      color: oklch(45% 0.012 68);
+      color: oklch(40% 0.018 65);
     }
+
+    .footer-mark {
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--sienna);
+    }
+
+    /* ── REVEAL ANIMATIONS ──────────────────── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.in { opacity: 1; transform: none; }
+
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ─────────────────────────── */
 
     @media (max-width: 860px) {
-      .footer-inner {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .footer-inner {
+      .hero {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        padding-top: 7.5rem;
+        gap: 3rem 0;
       }
 
-      .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
+      .hero::before { display: none; }
+
+      .hero-text, .hero-side {
+        grid-column: 1;
+        padding: 0;
       }
+
+      .hero-text { grid-row: 1; }
+      .hero-side { grid-row: 2; }
+      .hero-stats { grid-column: 1; grid-row: 3; }
+
+      .statement { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .services-hd { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .service {
+        padding: 2rem 0;
+        border-right: none;
+        border-bottom: 1px solid oklch(88% 0.016 82);
+      }
+      .service:last-child { border-bottom: none; }
+      .service:not(:first-child) { padding-left: 0; }
+
+      .process-hd { grid-template-columns: 1fr; gap: 1.5rem; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .step { border-right: none; padding: 0; }
+      .step:not(:first-child) { padding-left: 0; }
+
+      .consult { grid-template-columns: 1fr; gap: 3rem; }
+
+      .footer-main { grid-template-columns: 1fr; gap: 3rem; }
+
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── Nav ──────────────────────────────────────────────────── -->
-  <nav>
-    <a href="/" class="nav-logo">interluud</a>
-    <ul class="nav-links">
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/about">Who We Are</a></li>
-      <li><a href="/services">Services</a></li>
-      <li><a href="/faq">FAQs</a></li>
-      <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="nav-cta">Book a consult</a></li>
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">interluud</a>
+  <ul class="nav-links">
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">Who We Are</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/faq">FAQs</a></li>
+    <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="nav-cta">Book a consult</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-text">
+    <p class="hero-eyebrow reveal">Relationship transition coaching</p>
+
+    <h1 class="reveal d1">
+      The space<br>between<br><em>then</em> and<br>what's next.
+    </h1>
+
+    <p class="hero-sub reveal d2">
+      For high-achieving professionals navigating divorce, separation, or breakup — with clarity, strategy, and the confidence to build what comes after.
+    </p>
+
+    <div class="hero-actions reveal d3">
+      <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn">
+        Begin your transition
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/about" class="btn btn-ghost">About us</a>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="testimonial-card reveal d2">
+      <blockquote>
+        "I finally felt like I had a strategist and a steady presence in the same room."
+      </blockquote>
+      <cite>— Client, 8 months post-divorce</cite>
+    </div>
+  </div>
+
+  <div class="hero-stats reveal d2">
+    <div>
+      <div class="stat-num">94%</div>
+      <div class="stat-label">Feel in control within 60 days</div>
+    </div>
+    <div>
+      <div class="stat-num">1:1</div>
+      <div class="stat-label">Dedicated coaching only</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Confidential, always</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-band" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Divorce coaching <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Breakup recovery <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Separation decisions <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Co-parenting strategy <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Identity rebuilding <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Confidence restoration <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Platonic breakups <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Practical action plans <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Divorce coaching <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Breakup recovery <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Separation decisions <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Co-parenting strategy <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Identity rebuilding <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Confidence restoration <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Platonic breakups <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Practical action plans <span class="marquee-sep"></span></span>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <p class="section-tag reveal">Our philosophy</p>
+  <p class="statement-copy reveal d1">
+    Most people treat a relationship ending as something to <strong>survive.</strong>
+    We help high-achievers treat it as something to <strong>navigate</strong> — with the same precision and intentionality they bring to every other challenge in their lives.
+  </p>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="services-hd">
+    <p class="section-tag reveal">What we do</p>
+    <p class="services-intro reveal d1">Specialized coaching for the situations that follow you into every room — your decisions, your confidence, your next chapter.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service reveal">
+      <span class="service-num">01</span>
+      <h3 class="service-name">Divorce &amp; Separation</h3>
+      <p class="service-desc">From the moment of decision to the other side. Process, strategy, and emotional clarity — running in parallel, not in sequence.</p>
+      <a href="/services" class="text-link">Explore ↗</a>
+    </div>
+    <div class="service reveal d1">
+      <span class="service-num">02</span>
+      <h3 class="service-name">Breakup Recovery</h3>
+      <p class="service-desc">For relationships that ended but won't stop echoing. Structured support to move forward without pretending it didn't matter.</p>
+      <a href="/services" class="text-link">Explore ↗</a>
+    </div>
+    <div class="service reveal d2">
+      <span class="service-num">03</span>
+      <h3 class="service-name">Co-parenting Strategy</h3>
+      <p class="service-desc">The relationship ends — the partnership doesn't. Practical frameworks for navigating shared parenthood with grace and clarity.</p>
+      <a href="/services" class="text-link">Explore ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-hd">
+    <p class="section-tag reveal">How it works</p>
+    <h2 class="reveal d1">A structured path<br><em>through</em> uncertainty.</h2>
+  </div>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <span class="step-n">I</span>
+      <h3 class="step-name">Situation Assessment</h3>
+      <p class="step-desc">We map where you are — practically and emotionally. No assumptions. A clear picture of your starting point.</p>
+    </div>
+    <div class="step reveal d1">
+      <span class="step-n">II</span>
+      <h3 class="step-name">Transition Roadmap</h3>
+      <p class="step-desc">Your personalized plan — decisions to make, actions to take, a sequence that makes the overwhelming manageable.</p>
+    </div>
+    <div class="step reveal d2">
+      <span class="step-n">III</span>
+      <h3 class="step-name">Ongoing Coaching</h3>
+      <p class="step-desc">Regular sessions to work the plan, adjust as life moves, and maintain clarity when things get complicated.</p>
+    </div>
+    <div class="step reveal d3">
+      <span class="step-n">IV</span>
+      <h3 class="step-name">Forward Foundation</h3>
+      <p class="step-desc">Building what comes next — with the confidence, skills, and self-knowledge this transition made possible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULT -->
+<section class="consult" id="consult">
+  <div class="reveal">
+    <p class="consult-lede">First conversation</p>
+    <h2>A confidential<br>consultation.<br><em>No commitment.</em></h2>
+    <p class="consult-body">
+      Thirty minutes. We'll understand where you are, share how we work, and give you something concrete to walk away with — regardless of what you decide next.
+    </p>
+    <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn">
+      Book your consultation
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="consult-card reveal d1">
+    <p class="consult-card-lede">What you'll receive</p>
+    <ul class="consult-list">
+      <li>A clear read of your situation and its specific challenges</li>
+      <li>A personalized transition roadmap — yours to keep</li>
+      <li>Immediate strategies for the next 30 days</li>
+      <li>An honest explanation of how we work and whether it's right for you</li>
     </ul>
-  </nav>
+    <p class="consult-note">All consultations are fully confidential. Your details are never shared.</p>
+  </div>
+</section>
 
-  <!-- ─── Page hero ─────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-inner">
-      <span class="eyebrow reveal">Services</span>
-      <h1 class="hero-headline reveal">Support shaped around what you're actually facing.</h1>
-      <p class="hero-sub reveal">Every situation is different. Our services are built around the specific transitions that high-achieving professionals navigate — with precision, discretion, and genuine care.</p>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <p class="footer-brand">interluud</p>
+      <p class="footer-tagline">Coaching for the space between who you were and who you're becoming.</p>
     </div>
-  </section>
-
-  <!-- ─── Service 01 — Divorce & Separation ───────────────────── -->
-  <section class="service-section service-section--cream">
-    <div class="service-inner">
-      <div class="service-content">
-        <span class="service-number reveal">01</span>
-        <h2 class="service-headline reveal">Divorce &amp; Separation</h2>
-        <p class="service-tagline reveal">For those in the middle of it — or just beginning.</p>
-        <div class="service-body reveal">
-          <p>This service supports you from the moment of decision through to the other side. Whether you're certain the relationship is ending or still weighing the decision, we provide strategic clarity alongside emotional grounding.</p>
-          <p>We help you navigate legal conversations, co-parenting dynamics, financial implications, and the identity questions that no one talks about.</p>
-        </div>
-        <p class="service-includes-label reveal">What's included</p>
-        <ul class="service-list reveal">
-          <li>Weekly 1:1 coaching sessions (60 minutes)</li>
-          <li>Personalised transition roadmap</li>
-          <li>Between-session support via messaging</li>
-          <li>Access to our resource library</li>
-        </ul>
-        <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn reveal">Book a consultation</a>
-      </div>
-      <div class="service-aside reveal">
-        <div class="service-aside-rule"></div>
-        <p class="service-aside-quote">"Clarity isn't the absence of pain. It's knowing what you're navigating — and having someone in your corner who does too."</p>
-      </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">Who We Are</a></li>
+        <li><a href="/services">What We Do</a></li>
+        <li><a href="/faq">FAQs</a></li>
+      </ul>
     </div>
-  </section>
-
-  <div class="service-divider"></div>
-
-  <!-- ─── Service 02 — Breakup Recovery ───────────────────────── -->
-  <section class="service-section service-section--parchment">
-    <div class="service-inner">
-      <div class="service-content">
-        <span class="service-number reveal">02</span>
-        <h2 class="service-headline reveal">Breakup Recovery</h2>
-        <p class="service-tagline reveal">For the ending that won't stop echoing.</p>
-        <div class="service-body reveal">
-          <p>Not all relationship endings come with legal paperwork — but that doesn't make them less significant. This service is for those navigating the end of a committed relationship outside of marriage, whether recent or still unresolved.</p>
-          <p>We help you process what happened, understand the patterns, and build a clear path forward — without rushing past the parts that matter.</p>
-        </div>
-        <p class="service-includes-label reveal">What's included</p>
-        <ul class="service-list reveal">
-          <li>Bi-weekly 1:1 coaching sessions</li>
-          <li>Structured recovery framework</li>
-          <li>Clarity sessions to process patterns</li>
-          <li>Forward-planning roadmap</li>
-        </ul>
-        <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn reveal">Book a consultation</a>
-      </div>
-      <div class="service-aside reveal">
-        <div class="service-aside-rule"></div>
-        <p class="service-aside-quote">"The ending was significant. The recovery should be treated that way too."</p>
-      </div>
+    <div class="footer-col">
+      <h4>Start here</h4>
+      <ul>
+        <li><a href="#consult">Book a consultation</a></li>
+        <li><a href="/contact">Get in touch</a></li>
+      </ul>
     </div>
-  </section>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-legal">© 2025 interluud. All rights reserved.</p>
+    <div class="footer-mark"></div>
+  </div>
+</footer>
 
-  <div class="service-divider"></div>
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
 
-  <!-- ─── Service 03 — Co-parenting Strategy ──────────────────── -->
-  <section class="service-section service-section--cream">
-    <div class="service-inner">
-      <div class="service-content">
-        <span class="service-number reveal">03</span>
-        <h2 class="service-headline reveal">Co-parenting Strategy</h2>
-        <p class="service-tagline reveal">When the relationship ends, but the partnership doesn't.</p>
-        <div class="service-body reveal">
-          <p>Shared parenthood is one of the most complex ongoing relationships to navigate post-separation. This service focuses specifically on the co-parenting dynamic — communication frameworks, boundary-setting, conflict de-escalation, and building a stable environment for your children while you're rebuilding your own life.</p>
-        </div>
-        <p class="service-includes-label reveal">What's included</p>
-        <ul class="service-list reveal">
-          <li>Joint or individual coaching sessions</li>
-          <li>Communication frameworks and scripts</li>
-          <li>Conflict navigation strategies</li>
-          <li>Long-term co-parenting plan</li>
-        </ul>
-        <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn reveal">Book a consultation</a>
-      </div>
-      <div class="service-aside reveal">
-        <div class="service-aside-rule"></div>
-        <p class="service-aside-quote">"Your children need both of you to function well — even when functioning together is the hardest thing you've ever done."</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Pricing section ──────────────────────────────────────── -->
-  <!-- Update with actual pricing -->
-  <section class="pricing-section">
-    <div class="pricing-inner">
-      <div class="pricing-header">
-        <span class="section-tag reveal">Investment</span>
-        <h2 class="pricing-headline reveal">Transparent, flexible, built around you.</h2>
-        <p class="pricing-body reveal">We offer several engagement formats depending on where you are and what you need. All pricing is discussed in your free consultation — there are no surprises.</p>
-      </div>
-      <div class="pricing-tiers reveal">
-        <div class="pricing-tier">
-          <span class="tier-name">Single Session</span>
-          <p class="tier-desc">A focused 60-minute session for a specific decision or challenge.</p>
-          <span class="tier-price">From £150</span>
-        </div>
-        <div class="pricing-tier">
-          <span class="tier-name">6-Session Package</span>
-          <p class="tier-desc">A structured engagement over 6–8 weeks, with a transition roadmap.</p>
-          <span class="tier-price">From £750</span>
-        </div>
-        <div class="pricing-tier">
-          <span class="tier-name">Ongoing Support</span>
-          <p class="tier-desc">Monthly retainer for continued coaching through your transition.</p>
-          <span class="tier-price">From £400/month</span>
-        </div>
-      </div>
-      <p class="pricing-note reveal">All prices are inclusive of VAT where applicable. Payment plans available on request.</p>
-    </div>
-  </section>
-
-  <!-- ─── Process section ──────────────────────────────────────── -->
-  <section class="process-section">
-    <div class="process-inner">
-      <div class="process-header">
-        <span class="section-tag reveal">How it works</span>
-        <h2 class="process-headline reveal">A process built for people who don't have time to waste.</h2>
-      </div>
-      <div class="process-steps">
-        <div class="process-step reveal">
-          <span class="step-numeral">I</span>
-          <h3 class="step-title">Free consultation</h3>
-          <p class="step-desc">A 30-minute call to understand your situation. No pressure, no pitch — just an honest conversation about whether we're the right fit.</p>
-        </div>
-        <div class="process-step reveal">
-          <span class="step-numeral">II</span>
-          <h3 class="step-title">Tailored plan</h3>
-          <p class="step-desc">We map out a personalised transition roadmap based on your specific circumstances, timeline, and goals.</p>
-        </div>
-        <div class="process-step reveal">
-          <span class="step-numeral">III</span>
-          <h3 class="step-title">Ongoing coaching</h3>
-          <p class="step-desc">Regular sessions with your coach, adapted as things evolve. Support between sessions when it matters most.</p>
-        </div>
-        <div class="process-step reveal">
-          <span class="step-numeral">IV</span>
-          <h3 class="step-title">Clear forward</h3>
-          <p class="step-desc">You leave with more than resolution — you leave with a clear sense of direction, and the tools to maintain it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── CTA section ──────────────────────────────────────────── -->
-  <section class="cta-section">
-    <div class="cta-inner">
-      <h2 class="cta-headline reveal">Not sure which service is right for you?</h2>
-      <div class="cta-right">
-        <p class="cta-body reveal">That's exactly what the free consultation is for. We'll listen, understand your situation, and recommend the right path — or tell you honestly if we're not the right fit.</p>
-        <a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="btn reveal">Book a free consultation</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Footer ───────────────────────────────────────────────── -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="nav-logo">interluud</a>
-        <p class="footer-tagline">Relationship transition coaching for high-achieving professionals.</p>
-      </div>
-      <div class="footer-col">
-        <p class="footer-col-label">Navigation</p>
-        <ul class="footer-links">
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/about">Who We Are</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/faq">FAQs</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <p class="footer-col-label">Get in touch</p>
-        <ul class="footer-links">
-          <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola">Book a consult</a></li>
-          <li><a href="mailto:hello@interluud.com">hello@interluud.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-inner" style="border:none; padding-bottom:0; margin-bottom:0;">
-      <div class="footer-bottom" style="grid-column: 1 / -1;">
-        <p class="footer-legal">&copy; 2025 Interluud. All rights reserved.</p>
-        <p class="footer-legal"><a href="/privacy" style="color:inherit; transition: color 0.2s;">Privacy Policy</a></p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ─── Scroll reveal JS ──────────────────────────────────────── -->
-  <script>
-    // Hero elements reveal on load with stagger
-    const heroReveals = document.querySelectorAll('.hero .reveal');
-    heroReveals.forEach((el, i) => {
-      setTimeout(() => {
-        el.classList.add('visible');
-      }, 120 + i * 160);
-    });
-
-    // All other .reveal elements use IntersectionObserver
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    document.querySelectorAll('.reveal:not(.hero .reveal)').forEach((el) => {
-      observer.observe(el);
-    });
-  </script>
+  document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), 80 + i * 130);
+  });
+</script>
 
 </body>
 </html>
