@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>interluud — Relationship Transition Coaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream:       oklch(96.5% 0.012 85);
+      --parchment:   oklch(93%   0.018 82);
+      --ink:         oklch(20%   0.025 65);
+      --ink-soft:    oklch(42%   0.022 65);
+      --sienna:      oklch(52%   0.15  42);
+      --sienna-pale: oklch(88%   0.05  42);
+      --white:       oklch(99%   0.005 85);
+
+      --font-display: 'Cormorant', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      --pad: clamp(1.5rem, 5.5vw, 6.5rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ────────────────────────────────── */
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      padding: 1.4rem var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: oklch(96.5% 0.012 85 / 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid oklch(89% 0.016 82);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.09em !important;
+      color: var(--white) !important;
+      background: var(--ink);
+      padding: 0.6rem 1.4rem;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--sienna) !important; }
+
+    /* ── HERO ───────────────────────────────── */
+
+    .hero {
+      min-height: 100svh;
+      padding: 9rem var(--pad) 5rem;
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      grid-template-rows: 1fr auto;
+      gap: 0 4rem;
+      align-items: end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* background accent block */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 42%;
+      height: 78%;
+      background: var(--parchment);
+      z-index: 0;
+    }
+
+    .hero-text {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--sienna);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.8rem, 6.2vw, 7.5rem);
+      font-weight: 300;
+      line-height: 1.03;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 2rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--sienna);
+    }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 40ch;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      transition: background 0.22s, border-color 0.22s;
+    }
+
+    .btn:hover { background: var(--sienna); border-color: var(--sienna); }
+
+    .btn svg { transition: transform 0.22s; }
+    .btn:hover svg { transform: translateX(4px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: oklch(75% 0.02 65);
+    }
+
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: var(--white);
+      border-color: var(--ink);
+    }
+
+    .hero-side {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      padding: 2.25rem 2.5rem;
+      border-left: 3px solid var(--sienna);
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-card blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--ink);
+      margin-bottom: 1.1rem;
+    }
+
+    .testimonial-card cite {
+      font-style: normal;
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--sienna);
+    }
+
+    .hero-stats {
+      grid-column: 1;
+      grid-row: 2;
+      display: flex;
+      gap: clamp(2rem, 5vw, 5rem);
+      padding-top: 2.5rem;
+      border-top: 1px solid oklch(88% 0.016 82);
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 2.8vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-top: 0.3rem;
+      max-width: 16ch;
+    }
+
+    /* ── MARQUEE ────────────────────────────── */
+
+    .marquee-band {
+      background: var(--ink);
+      padding: 1rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      animation: scroll 28s linear infinite;
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.8rem;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 300;
+      color: oklch(85% 0.012 85);
+      padding-right: 1.8rem;
+    }
+
+    .marquee-sep {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--sienna);
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── STATEMENT ──────────────────────────── */
+
+    .statement {
+      padding: clamp(6rem, 12vw, 14rem) var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 2.4fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .section-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      padding-top: 0.6rem;
+    }
+
+    .statement-copy {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+
+    .statement-copy strong { font-weight: 500; }
+
+    /* ── SERVICES ───────────────────────────── */
+
+    .services {
+      padding: 0 var(--pad) clamp(6rem, 12vw, 14rem);
+    }
+
+    .services-hd {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid oklch(88% 0.016 82);
+    }
+
+    .services-intro {
+      font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 46ch;
+      align-self: end;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .service {
+      padding: 0 2.5rem 0 0;
+      border-right: 1px solid oklch(88% 0.016 82);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .service:last-child { border-right: none; padding-right: 0; }
+    .service:not(:first-child) { padding-left: 2.5rem; }
+
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--sienna);
+    }
+
+    .service-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 1.7vw, 1.65rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .service-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    .text-link {
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+      align-self: start;
+    }
+
+    .text-link:hover { border-color: var(--sienna); }
+
+    /* ── PROCESS ────────────────────────────── */
+
+    .process {
+      background: var(--ink);
+      padding: clamp(5rem, 10vw, 12rem) var(--pad);
+      color: var(--cream);
+    }
+
+    .process-hd {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
+    }
+
+    .process-hd .section-tag { color: var(--sienna); align-self: end; }
+
+    .process-hd h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--cream);
+      letter-spacing: -0.015em;
+    }
+
+    .process-hd h2 em { font-style: italic; }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .step {
+      padding: 0 3rem 0 0;
+      border-right: 1px solid oklch(32% 0.02 65);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .step:last-child { border-right: none; padding-right: 0; }
+    .step:not(:first-child) { padding-left: 3rem; }
+
+    .step-n {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1;
+      color: var(--sienna);
+      opacity: 0.55;
+    }
+
+    .step-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 1.6vw, 1.55rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: oklch(92% 0.012 85);
+    }
+
+    .step-desc {
+      font-size: 0.86rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: oklch(55% 0.02 65);
+    }
+
+    /* ── CONSULT ────────────────────────────── */
+
+    .consult {
+      padding: clamp(6rem, 12vw, 14rem) var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .consult-lede {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 1.5rem;
+    }
+
+    .consult h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 4.8rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.022em;
+      margin-bottom: 1.75rem;
+    }
+
+    .consult h2 em { font-style: italic; }
+
+    .consult-body {
+      font-size: clamp(0.93rem, 1.1vw, 1rem);
+      font-weight: 300;
+      line-height: 1.72;
+      color: var(--ink-soft);
+      max-width: 40ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .consult-card {
+      background: var(--parchment);
+      padding: 3rem;
+    }
+
+    .consult-card-lede {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2rem;
+    }
+
+    .consult-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .consult-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    .consult-list li::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--sienna);
+      margin-top: 0.72rem;
+      flex-shrink: 0;
+    }
+
+    .consult-note {
+      font-size: 0.76rem;
+      font-style: italic;
+      color: var(--ink-soft);
+      padding-top: 1.5rem;
+      border-top: 1px solid oklch(87% 0.016 82);
+    }
+
+    /* ── FOOTER ─────────────────────────────── */
+
+    footer {
+      background: var(--ink);
+      padding: clamp(4rem, 8vw, 8rem) var(--pad) 2.5rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid oklch(32% 0.02 65);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: oklch(92% 0.012 85);
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: oklch(48% 0.02 65);
+      max-width: 30ch;
+    }
+
+    .footer-col h4 {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: oklch(70% 0.018 65);
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .footer-col a {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: oklch(48% 0.02 65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: oklch(85% 0.012 85); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-legal {
+      font-size: 0.76rem;
+      font-weight: 300;
+      color: oklch(40% 0.018 65);
+    }
+
+    .footer-mark {
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--sienna);
+    }
+
+    /* ── REVEAL ANIMATIONS ──────────────────── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.in { opacity: 1; transform: none; }
+
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        padding-top: 7.5rem;
+        gap: 3rem 0;
+      }
+
+      .hero::before { display: none; }
+
+      .hero-text, .hero-side {
+        grid-column: 1;
+        padding: 0;
+      }
+
+      .hero-text { grid-row: 1; }
+      .hero-side { grid-row: 2; }
+      .hero-stats { grid-column: 1; grid-row: 3; }
+
+      .statement { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .services-hd { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .service {
+        padding: 2rem 0;
+        border-right: none;
+        border-bottom: 1px solid oklch(88% 0.016 82);
+      }
+      .service:last-child { border-bottom: none; }
+      .service:not(:first-child) { padding-left: 0; }
+
+      .process-hd { grid-template-columns: 1fr; gap: 1.5rem; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .step { border-right: none; padding: 0; }
+      .step:not(:first-child) { padding-left: 0; }
+
+      .consult { grid-template-columns: 1fr; gap: 3rem; }
+
+      .footer-main { grid-template-columns: 1fr; gap: 3rem; }
+
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">interluud</a>
+  <ul class="nav-links">
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">Who We Are</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/faq">FAQs</a></li>
+    <li><a href="#consult" class="nav-cta">Book a consult</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-text">
+    <p class="hero-eyebrow reveal">Relationship transition coaching</p>
+
+    <h1 class="reveal d1">
+      The space<br>between<br><em>then</em> and<br>what's next.
+    </h1>
+
+    <p class="hero-sub reveal d2">
+      For high-achieving professionals navigating divorce, separation, or breakup — with clarity, strategy, and the confidence to build what comes after.
+    </p>
+
+    <div class="hero-actions reveal d3">
+      <a href="#consult" class="btn">
+        Begin your transition
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/about" class="btn btn-ghost">About us</a>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="testimonial-card reveal d2">
+      <blockquote>
+        "I finally felt like I had a strategist and a steady presence in the same room."
+      </blockquote>
+      <cite>— Client, 8 months post-divorce</cite>
+    </div>
+  </div>
+
+  <div class="hero-stats reveal d2">
+    <div>
+      <div class="stat-num">94%</div>
+      <div class="stat-label">Feel in control within 60 days</div>
+    </div>
+    <div>
+      <div class="stat-num">1:1</div>
+      <div class="stat-label">Dedicated coaching only</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Confidential, always</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-band" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Divorce coaching <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Breakup recovery <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Separation decisions <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Co-parenting strategy <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Identity rebuilding <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Confidence restoration <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Platonic breakups <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Practical action plans <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Divorce coaching <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Breakup recovery <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Separation decisions <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Co-parenting strategy <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Identity rebuilding <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Confidence restoration <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Platonic breakups <span class="marquee-sep"></span></span>
+    <span class="marquee-item">Practical action plans <span class="marquee-sep"></span></span>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <p class="section-tag reveal">Our philosophy</p>
+  <p class="statement-copy reveal d1">
+    Most people treat a relationship ending as something to <strong>survive.</strong>
+    We help high-achievers treat it as something to <strong>navigate</strong> — with the same precision and intentionality they bring to every other challenge in their lives.
+  </p>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="services-hd">
+    <p class="section-tag reveal">What we do</p>
+    <p class="services-intro reveal d1">Specialized coaching for the situations that follow you into every room — your decisions, your confidence, your next chapter.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service reveal">
+      <span class="service-num">01</span>
+      <h3 class="service-name">Divorce &amp; Separation</h3>
+      <p class="service-desc">From the moment of decision to the other side. Process, strategy, and emotional clarity — running in parallel, not in sequence.</p>
+      <a href="/services" class="text-link">Explore ↗</a>
+    </div>
+    <div class="service reveal d1">
+      <span class="service-num">02</span>
+      <h3 class="service-name">Breakup Recovery</h3>
+      <p class="service-desc">For relationships that ended but won't stop echoing. Structured support to move forward without pretending it didn't matter.</p>
+      <a href="/services" class="text-link">Explore ↗</a>
+    </div>
+    <div class="service reveal d2">
+      <span class="service-num">03</span>
+      <h3 class="service-name">Co-parenting Strategy</h3>
+      <p class="service-desc">The relationship ends — the partnership doesn't. Practical frameworks for navigating shared parenthood with grace and clarity.</p>
+      <a href="/services" class="text-link">Explore ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-hd">
+    <p class="section-tag reveal">How it works</p>
+    <h2 class="reveal d1">A structured path<br><em>through</em> uncertainty.</h2>
+  </div>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <span class="step-n">I</span>
+      <h3 class="step-name">Situation Assessment</h3>
+      <p class="step-desc">We map where you are — practically and emotionally. No assumptions. A clear picture of your starting point.</p>
+    </div>
+    <div class="step reveal d1">
+      <span class="step-n">II</span>
+      <h3 class="step-name">Transition Roadmap</h3>
+      <p class="step-desc">Your personalized plan — decisions to make, actions to take, a sequence that makes the overwhelming manageable.</p>
+    </div>
+    <div class="step reveal d2">
+      <span class="step-n">III</span>
+      <h3 class="step-name">Ongoing Coaching</h3>
+      <p class="step-desc">Regular sessions to work the plan, adjust as life moves, and maintain clarity when things get complicated.</p>
+    </div>
+    <div class="step reveal d3">
+      <span class="step-n">IV</span>
+      <h3 class="step-name">Forward Foundation</h3>
+      <p class="step-desc">Building what comes next — with the confidence, skills, and self-knowledge this transition made possible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULT -->
+<section class="consult" id="consult">
+  <div class="reveal">
+    <p class="consult-lede">First conversation</p>
+    <h2>A confidential<br>consultation.<br><em>No commitment.</em></h2>
+    <p class="consult-body">
+      Thirty minutes. We'll understand where you are, share how we work, and give you something concrete to walk away with — regardless of what you decide next.
+    </p>
+    <a href="https://meetings.hubspot.com/" class="btn">
+      Book your consultation
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="consult-card reveal d1">
+    <p class="consult-card-lede">What you'll receive</p>
+    <ul class="consult-list">
+      <li>A clear read of your situation and its specific challenges</li>
+      <li>A personalized transition roadmap — yours to keep</li>
+      <li>Immediate strategies for the next 30 days</li>
+      <li>An honest explanation of how we work and whether it's right for you</li>
+    </ul>
+    <p class="consult-note">All consultations are fully confidential. Your details are never shared.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <p class="footer-brand">interluud</p>
+      <p class="footer-tagline">Coaching for the space between who you were and who you're becoming.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">Who We Are</a></li>
+        <li><a href="/services">What We Do</a></li>
+        <li><a href="/faq">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Start here</h4>
+      <ul>
+        <li><a href="#consult">Book a consultation</a></li>
+        <li><a href="/contact">Get in touch</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-legal">© 2025 interluud. All rights reserved.</p>
+    <div class="footer-mark"></div>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+
+  document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), 80 + i * 130);
+  });
+</script>
+
+</body>
+</html>
