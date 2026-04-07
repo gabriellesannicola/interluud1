@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>interluud — Brand Positioning Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:     oklch(96.5% 0.012 85);
+      --parchment: oklch(93%   0.018 82);
+      --ink:       oklch(20%   0.025 65);
+      --ink-soft:  oklch(42%   0.022 65);
+      --ink-faint: oklch(62%   0.018 65);
+      --sienna:    oklch(52%   0.15  42);
+      --white:     oklch(99%   0.005 85);
+      --border:    oklch(88%   0.016 82);
+      --border-dk: oklch(32%   0.02  65);
+
+      --font-d: 'Cormorant', Georgia, serif;
+      --font-b: 'DM Sans', system-ui, sans-serif;
+      --pad: clamp(2rem, 6vw, 7rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-b);
+      font-size: clamp(0.9rem, 1.05vw, 1rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      min-height: 100svh;
+      padding: 6rem var(--pad);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 38%;
+      height: 60%;
+      background: var(--parchment);
+      z-index: 0;
+    }
+
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-wordmark {
+      font-family: var(--font-d);
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .cover-doc-label {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      text-align: right;
+    }
+
+    .cover-body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-eyebrow {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .cover-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--sienna);
+    }
+
+    .cover-title {
+      font-family: var(--font-d);
+      font-size: clamp(4rem, 7vw, 9rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 3rem;
+    }
+
+    .cover-title em {
+      font-style: italic;
+      color: var(--sienna);
+    }
+
+    .cover-sub {
+      font-size: clamp(1rem, 1.3vw, 1.2rem);
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      max-width: 48ch;
+    }
+
+    .cover-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 4rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-foot-label {
+      font-size: 0.73rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .cover-mark { width: 1.4rem; height: 1.4rem; background: var(--sienna); }
+
+    /* ── TOC ── */
+    .toc {
+      padding: clamp(5rem, 10vw, 10rem) var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc-label {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      padding-top: 0.4rem;
+    }
+
+    .toc-list { list-style: none; }
+
+    .toc-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc-list li:first-child { border-top: 1px solid var(--border); }
+
+    .toc-list a {
+      font-family: var(--font-d);
+      font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .toc-list a:hover { color: var(--sienna); }
+
+    .toc-num {
+      font-family: var(--font-d);
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--sienna);
+      flex-shrink: 0;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: clamp(5rem, 10vw, 11rem) var(--pad);
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-child { border-bottom: none; }
+
+    .section-hd {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      margin-bottom: clamp(3rem, 5vw, 5rem);
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      padding-top: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 3.2vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .section-title em { font-style: italic; }
+
+    /* ── BODY CONTENT ── */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+    }
+
+    .content-label {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      padding-top: 0.4rem;
+    }
+
+    .content-body { max-width: 62ch; }
+
+    .content-body p {
+      font-size: clamp(0.93rem, 1.1vw, 1.05rem);
+      font-weight: 300;
+      line-height: 1.72;
+      color: var(--ink-soft);
+      margin-bottom: 1.25rem;
+    }
+
+    .content-body p:last-child { margin-bottom: 0; }
+
+    .content-body strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      grid-column: 1 / -1;
+      margin: 3rem 0;
+      padding: 3rem;
+      background: var(--ink);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .pull-quote-label {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+    }
+
+    .pull-quote-text {
+      font-family: var(--font-d);
+      font-size: clamp(1.4rem, 2.2vw, 2.2rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.3;
+      color: oklch(92% 0.012 85);
+    }
+
+    /* ── CARDS ── */
+    .card-row {
+      display: grid;
+      gap: 0;
+    }
+
+    .card-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .card {
+      padding: 2.5rem 2.5rem 2.5rem 0;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card:last-child { border-right: none; padding-right: 0; }
+    .card:not(:first-child) { padding-left: 2.5rem; }
+
+    .card-num {
+      font-family: var(--font-d);
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--sienna);
+    }
+
+    .card-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .card-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    /* ── PALETTE ── */
+    .palette-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .swatch-block {
+      height: 10rem;
+      border: 1px solid oklch(88% 0.016 82);
+    }
+
+    .swatch-name {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .swatch-value {
+      font-family: monospace;
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    .swatch-use {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--ink-faint);
+    }
+
+    /* ── TYPE SPECIMENS ── */
+    .type-specimen {
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 4rem;
+      align-items: baseline;
+    }
+
+    .type-specimen:last-child { border-bottom: none; }
+
+    .type-meta {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      line-height: 1.5;
+    }
+
+    /* ── DO / DON'T ── */
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    .do-block, .dont-block {
+      padding: 2.5rem;
+    }
+
+    .do-block { background: oklch(94% 0.018 130 / 0.25); }
+    .dont-block { background: oklch(88% 0.04 25 / 0.2); }
+
+    .do-label, .dont-label {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .do-label { color: oklch(40% 0.12 140); }
+    .dont-label { color: oklch(45% 0.15 25); }
+
+    .do-list, .dont-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .do-list li, .dont-list li {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .do-list li::before {
+      content: '→';
+      color: oklch(40% 0.12 140);
+      flex-shrink: 0;
+    }
+
+    .dont-list li::before {
+      content: '×';
+      color: oklch(45% 0.15 25);
+      flex-shrink: 0;
+    }
+
+    /* ── MESSAGING ── */
+    .message-block {
+      padding: 2.5rem;
+      background: var(--parchment);
+      margin-bottom: 1.5rem;
+    }
+
+    .message-block:last-child { margin-bottom: 0; }
+
+    .msg-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 1rem;
+    }
+
+    .msg-headline {
+      font-family: var(--font-d);
+      font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .msg-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+
+    /* ── DARK SECTION ── */
+    .dark-section {
+      background: var(--ink);
+      color: oklch(92% 0.012 85);
+      padding: clamp(5rem, 10vw, 11rem) var(--pad);
+      border-bottom: none !important;
+    }
+
+    .dark-section .section-hd {
+      border-bottom-color: var(--border-dk);
+    }
+
+    .dark-section .section-title { color: oklch(92% 0.012 85); }
+
+    .dark-section .card { border-right-color: var(--border-dk); }
+    .dark-section .card-title { color: oklch(92% 0.012 85); }
+    .dark-section .card-body { color: oklch(55% 0.02 65); }
+    .dark-section .content-label { color: oklch(45% 0.02 65); }
+    .dark-section .content-body p { color: oklch(60% 0.02 65); }
+    .dark-section .content-body strong { color: oklch(88% 0.012 85); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .toc, .section-hd, .content-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .card-row.cols-3, .card-row.cols-2 { grid-template-columns: 1fr; }
+      .card { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem 0; }
+      .card:not(:first-child) { padding-left: 0; }
+      .pull-quote { grid-template-columns: 1fr; gap: 1.5rem; }
+      .palette-row { grid-template-columns: repeat(2, 1fr); }
+      .do-dont { grid-template-columns: 1fr; }
+      .type-specimen { grid-template-columns: 1fr; gap: 0.75rem; }
+      .cover-foot { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-top">
+    <span class="cover-wordmark">interluud</span>
+    <span class="cover-doc-label">Brand Positioning<br>Guide — 2025</span>
+  </div>
+
+  <div class="cover-body">
+    <p class="cover-eyebrow">Brand foundation</p>
+    <h1 class="cover-title">Who we<br>are. What<br>we <em>stand for.</em></h1>
+    <p class="cover-sub">
+      A complete reference for how interluud presents itself to the world — our positioning, voice, visual identity, and the messaging that connects us to the people who need us most.
+    </p>
+  </div>
+
+  <div class="cover-foot">
+    <span class="cover-foot-label">Confidential · interluud.com · Gabrielle San Nicola</span>
+    <div class="cover-mark"></div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <p class="toc-label">Contents</p>
+  <ul class="toc-list">
+    <li><a href="#foundation">Brand Foundation</a><span class="toc-num">01</span></li>
+    <li><a href="#audience">Our Client</a><span class="toc-num">02</span></li>
+    <li><a href="#voice">Voice &amp; Tone</a><span class="toc-num">03</span></li>
+    <li><a href="#messaging">Core Messaging</a><span class="toc-num">04</span></li>
+    <li><a href="#visual">Visual Identity</a><span class="toc-num">05</span></li>
+    <li><a href="#principles">Design Principles</a><span class="toc-num">06</span></li>
+  </ul>
+</div>
+
+<!-- 01 BRAND FOUNDATION -->
+<section id="foundation">
+  <div class="section-hd">
+    <p class="section-tag">01 — Foundation</p>
+    <h2 class="section-title">The brand<br><em>at its core.</em></h2>
+  </div>
+
+  <div class="card-row cols-3" style="margin-bottom: 4rem;">
+    <div class="card">
+      <span class="card-num">Mission</span>
+      <h3 class="card-title">Why we exist</h3>
+      <p class="card-body">To help high-achieving professionals navigate relationship transitions with the same precision and intentionality they bring to every other challenge in their lives.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Vision</span>
+      <h3 class="card-title">What we're working toward</h3>
+      <p class="card-body">A world where the end of a relationship is understood as a threshold — not a failure — and where people have the support to cross it with clarity and confidence.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Positioning</span>
+      <h3 class="card-title">How we're different</h3>
+      <p class="card-body">Not a therapist. Not a life coach. A coach-strategist — the rare combination of emotional intelligence and structured thinking that high-achievers actually need.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p class="pull-quote-label">The name</p>
+    <p class="pull-quote-text">"interluud is the in-between state where real change happens. Not where you were. Not yet where you're going. The threshold where transformation is possible."</p>
+  </div>
+
+  <div class="content-grid" style="margin-top: 3rem;">
+    <p class="content-label">The interlude</p>
+    <div class="content-body">
+      <p>In music, an interlude is the space between movements — not empty, but charged with what came before and alive with what's coming next. That's the space interluud inhabits and holds for clients.</p>
+      <p>The name signals that this moment in someone's life — however painful — is not a void. It is a <strong>liminal space</strong>: full of possibility, requiring guidance, and ultimately, transformative.</p>
+      <p>Every design and communication choice reinforces this: we are here in the threshold. We are not rushing people through it. We are helping them navigate it well.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 OUR CLIENT -->
+<section id="audience">
+  <div class="section-hd">
+    <p class="section-tag">02 — Audience</p>
+    <h2 class="section-title">The person<br>we <em>serve.</em></h2>
+  </div>
+
+  <div class="content-grid" style="margin-bottom: 4rem;">
+    <p class="content-label">Who they are</p>
+    <div class="content-body">
+      <p>High-achieving professionals — executives, founders, lawyers, creatives — navigating divorce, separation, or breakup. They are <strong>professionally capable</strong> and <strong>emotionally depleted</strong>.</p>
+      <p>They are used to being in control. Losing it is unfamiliar. They don't want to be fixed — they want to be equipped. They come to interluud when they've realised that processing feelings alone won't get them where they need to go.</p>
+    </div>
+  </div>
+
+  <div class="card-row cols-2" style="margin-bottom: 4rem;">
+    <div class="card">
+      <span class="card-num">What they're feeling</span>
+      <h3 class="card-title">The internal state</h3>
+      <p class="card-body">Overwhelmed by decisions they've never had to make before. Anxious about reputation, finances, identity. Ashamed that something so personal has disrupted someone so "together." Exhausted from holding it together publicly while falling apart privately.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">What they need</span>
+      <h3 class="card-title">What they're searching for</h3>
+      <p class="card-body">A structured path forward — not just emotional support. Someone who can hold both their complexity and their competence. Clarity on what to do next, in what order, and why. Confidence that this won't define them. A roadmap, not a support group.</p>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <p class="content-label">What they say</p>
+    <div class="content-body">
+      <p><em>"I feel like I'm failing at the most personal thing in my life."</em></p>
+      <p><em>"I don't know who I am without this relationship."</em></p>
+      <p><em>"I need to make a hundred decisions and I don't know where to start."</em></p>
+      <p><em>"I don't have time to fall apart."</em></p>
+      <p>These are the phrases our messaging must meet — and answer — with calm precision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 VOICE & TONE -->
+<section id="voice">
+  <div class="section-hd">
+    <p class="section-tag">03 — Voice &amp; Tone</p>
+    <h2 class="section-title">How we<br><em>speak.</em></h2>
+  </div>
+
+  <div class="content-grid" style="margin-bottom: 4rem;">
+    <p class="content-label">The voice</p>
+    <div class="content-body">
+      <p>interluud's voice is <strong>warm and curious</strong>. It asks before advising. It makes people feel deeply heard before offering direction. It is direct without being cold, and strategic without being clinical.</p>
+      <p>Think: a brilliant friend who also ran a company. They have real experience, real structure to offer — and they genuinely care about you as a person, not just as a problem to solve.</p>
+    </div>
+  </div>
+
+  <div class="card-row cols-3" style="margin-bottom: 4rem;">
+    <div class="card">
+      <span class="card-num">We are</span>
+      <h3 class="card-title">Grounded</h3>
+      <p class="card-body">We don't catastrophise or minimise. We meet people where they are, with steadiness. Our language reflects calm confidence — not cheerleading, not hand-wringing.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">We are</span>
+      <h3 class="card-title">Precise</h3>
+      <p class="card-body">We choose words carefully. We say what we mean without hedging. We don't use jargon, therapeutic clichés, or empty affirmations. Clarity is a form of respect.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">We are</span>
+      <h3 class="card-title">Human</h3>
+      <p class="card-body">We acknowledge what's hard without dwelling in it. We see the whole person — their complexity, their capability, their pain — and we speak to all of it at once.</p>
+    </div>
+  </div>
+
+  <div class="do-dont">
+    <div class="do-block">
+      <p class="do-label">Say this</p>
+      <ul class="do-list">
+        <li>"Navigate" not "heal" — implies agency, not passivity</li>
+        <li>"Transition" not "divorce" in positioning — broader and less loaded</li>
+        <li>"Clarity" not "closure" — closure is a myth; clarity is achievable</li>
+        <li>"Your next chapter" not "moving on" — forward without erasure</li>
+        <li>"Structured support" not "a safe space" — signals action over comfort</li>
+        <li>Short, declarative sentences. Confidence doesn't ramble.</li>
+      </ul>
+    </div>
+    <div class="dont-block">
+      <p class="dont-label">Avoid this</p>
+      <ul class="dont-list">
+        <li>"Journey" — overused, vague, slightly patronising</li>
+        <li>"Thrive" — wellness cliché, feels generic</li>
+        <li>"You deserve..." — presupposes rather than earns</li>
+        <li>"Healing journey" — therapy-adjacent, not coach-adjacent</li>
+        <li>Excessive empathy signalling — show care through precision</li>
+        <li>Exclamation marks — they undermine the calm authority of the brand</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 CORE MESSAGING -->
+<section id="messaging">
+  <div class="section-hd">
+    <p class="section-tag">04 — Messaging</p>
+    <h2 class="section-title">What we<br><em>say.</em></h2>
+  </div>
+
+  <div style="margin-bottom: 3rem;">
+    <div class="message-block">
+      <p class="msg-tag">Positioning line</p>
+      <p class="msg-headline">"The space between then and what's next."</p>
+      <p class="msg-body">Primary brand line. Used in hero contexts, social bio, email signatures. Captures the liminal concept without explanation.</p>
+    </div>
+
+    <div class="message-block">
+      <p class="msg-tag">Value proposition</p>
+      <p class="msg-headline">"Coaching for high-achieving professionals navigating relationship transitions — with clarity, strategy, and the confidence to build what comes after."</p>
+      <p class="msg-body">Full description of what we do and who it's for. Used in about pages, bios, press contexts.</p>
+    </div>
+
+    <div class="message-block">
+      <p class="msg-tag">The transformation</p>
+      <p class="msg-headline">"Rebuilt from the inside out."</p>
+      <p class="msg-body">The outcome clients experience — stronger sense of self, clearer values, more confident decisions across all of life. Not just through the transition; changed by it.</p>
+    </div>
+
+    <div class="message-block">
+      <p class="msg-tag">The differentiator</p>
+      <p class="msg-headline">"Neither a therapist nor a typical life coach — a coach-strategist."</p>
+      <p class="msg-body">Emotional intelligence and structured thinking, running in parallel. This is what high-achievers actually need, and what they can't find elsewhere.</p>
+    </div>
+
+    <div class="message-block">
+      <p class="msg-tag">Consultation offer</p>
+      <p class="msg-headline">"A confidential consultation. No commitment."</p>
+      <p class="msg-body">The low-stakes first step. Emphasise: you'll receive something concrete regardless of what you decide. This removes the fear of starting.</p>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <p class="content-label">The philosophy</p>
+    <div class="content-body">
+      <p>Most people treat a relationship ending as something to <strong>survive.</strong> We help high-achievers treat it as something to <strong>navigate</strong> — with the same precision and intentionality they bring to every other challenge in their lives.</p>
+      <p>This is the core reframe interluud offers: from victim of circumstance to author of what comes next.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 VISUAL IDENTITY -->
+<section id="visual">
+  <div class="section-hd">
+    <p class="section-tag">05 — Visual Identity</p>
+    <h2 class="section-title">How we<br><em>look.</em></h2>
+  </div>
+
+  <p class="content-label" style="margin-bottom: 2rem;">Colour palette</p>
+  <div class="palette-row">
+    <div class="swatch">
+      <div class="swatch-block" style="background: oklch(96.5% 0.012 85);"></div>
+      <p class="swatch-name">Cream</p>
+      <p class="swatch-value">oklch(96.5% 0.012 85)</p>
+      <p class="swatch-use">Page background</p>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background: oklch(93% 0.018 82);"></div>
+      <p class="swatch-name">Parchment</p>
+      <p class="swatch-value">oklch(93% 0.018 82)</p>
+      <p class="swatch-use">Cards, section backgrounds</p>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background: oklch(52% 0.15 42);"></div>
+      <p class="swatch-name">Sienna</p>
+      <p class="swatch-value">oklch(52% 0.15 42)</p>
+      <p class="swatch-use">Brand accent — only accent</p>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background: oklch(42% 0.022 65);"></div>
+      <p class="swatch-name">Ink Soft</p>
+      <p class="swatch-value">oklch(42% 0.022 65)</p>
+      <p class="swatch-use">Body text, captions</p>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background: oklch(20% 0.025 65); border-color: oklch(32% 0.02 65);"></div>
+      <p class="swatch-name">Ink</p>
+      <p class="swatch-value">oklch(20% 0.025 65)</p>
+      <p class="swatch-use">Headlines, dark sections</p>
+    </div>
+  </div>
+
+  <p class="content-label" style="margin-bottom: 2rem; margin-top: 4rem;">Typography</p>
+
+  <div class="type-specimen">
+    <div class="type-meta">Cormorant<br>300 Display<br>Hero</div>
+    <p style="font-family:'Cormorant',serif; font-size: clamp(3rem,5vw,6rem); font-weight:300; line-height:1; letter-spacing:-0.025em; color: var(--ink);">The space between.</p>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-meta">Cormorant Italic<br>300 Display<br>Emphasis</div>
+    <p style="font-family:'Cormorant',serif; font-size: clamp(2rem,3.5vw,4rem); font-weight:300; font-style:italic; line-height:1.1; letter-spacing:-0.02em; color: var(--sienna);">then and what's next.</p>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-meta">Cormorant<br>400 Regular<br>Subheadings</div>
+    <p style="font-family:'Cormorant',serif; font-size: clamp(1.3rem,1.7vw,1.65rem); font-weight:400; line-height:1.2; color: var(--ink);">Divorce &amp; Separation Coaching</p>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-meta">DM Sans<br>300 Body<br>All body text</div>
+    <p style="font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:300; line-height:1.7; color: var(--ink-soft); max-width: 55ch;">For high-achieving professionals navigating divorce, separation, or breakup — with clarity, strategy, and the confidence to build what comes after.</p>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-meta">DM Sans<br>500 Caps<br>Labels &amp; UI</div>
+    <p style="font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color: var(--sienna);">Relationship Transition Coaching</p>
+  </div>
+</section>
+
+<!-- 06 DESIGN PRINCIPLES -->
+<section id="principles" class="dark-section">
+  <div class="section-hd">
+    <p class="section-tag">06 — Design Principles</p>
+    <h2 class="section-title">Five rules<br><em>everything follows.</em></h2>
+  </div>
+
+  <div class="card-row cols-3">
+    <div class="card">
+      <span class="card-num">I</span>
+      <h3 class="card-title">Clarity over comfort</h3>
+      <p class="card-body">Every element earns its place by reducing cognitive load or building confidence. Remove anything decorative that doesn't serve meaning. Clarity is a form of care.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">II</span>
+      <h3 class="card-title">Strategic warmth</h3>
+      <p class="card-body">Warm and curious, but with direction underneath. Warmth is earned through precision, not softness. The design mirrors the coaching: heard first, then guided.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">III</span>
+      <h3 class="card-title">Liminal by design</h3>
+      <p class="card-body">interluud exists in the threshold. Asymmetry, generous negative space, typographic restraint — all convey movement without chaos, pause without stagnation.</p>
+    </div>
+  </div>
+
+  <div class="card-row cols-2" style="margin-top: 0; border-top: 1px solid var(--border-dk);">
+    <div class="card" style="padding-top: 2.5rem;">
+      <span class="card-num">IV</span>
+      <h3 class="card-title">The premium of restraint</h3>
+      <p class="card-body">One accent colour. One typographic contrast. One hero moment per section. Bold design doesn't mean more — it means more intentional. Restraint signals confidence.</p>
+    </div>
+    <div class="card" style="padding-top: 2.5rem;">
+      <span class="card-num">V</span>
+      <h3 class="card-title">Hierarchy that leads</h3>
+      <p class="card-body">High-achieving clients are decisive when given clear information. Guide the eye without ambiguity: headline → context → action. Never three things competing for attention at once.</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

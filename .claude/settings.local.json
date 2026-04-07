@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:interluud.com)",
+      "Bash(open \"/Users/gabsannicola/don''t sync!/claude/interluud-bolder.html\")",
+      "Bash(open $PWD/interluud-bolder.html)",
+      "Bash(node --version)",
+      "Bash(python3 -c \"import shutil; shutil.copy\\(''/Users/gabsannicola/don\\\\u2019t sync!/claude/interluud-bolder.html'', ''/Users/gabsannicola/don\\\\u2019t sync!/claude/index.html''\\)\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git -C \"/Users/gabsannicola/don't sync!/claude/\" status)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)",
+      "Bash(git --version)",
+      "Bash(git config:*)",
+      "Bash(brew --version)",
+      "Read(//Users/gabsannicola/**)",
+      "Read(//Users/gabsannicola/.ssh/**)",
+      "Bash(git ls-remote:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(curl -s https://api.github.com/repos/gabriellesannicola/interluud1/contents)",
+      "Bash(python3 -c \"import sys,json; [print\\(f['name']\\) for f in json.load\\(sys.stdin\\) if isinstance\\(f, dict\\)]\")",
+      "Bash(ssh-keygen -t ed25519 -C \"hello@interluud.com\" -f ~/.ssh/interluud_github -N \"\")",
+      "Bash(chmod 600 ~/.ssh/config)",
+      "Bash(chmod 600 ~/.ssh/interluud_github)",
+      "Bash(chmod 644 ~/.ssh/interluud_github.pub)",
+      "Bash(ssh -T git@github.com)",
+      "Bash(ssh-keyscan github.com)"
+    ]
+  }
+}
