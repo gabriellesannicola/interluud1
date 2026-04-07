@@ -271,7 +271,7 @@
       font-size: clamp(0.93rem, 1.1vw, 1rem);
       font-weight: 300;
       line-height: 1.72;
-      color: oklch(55% 0.02 65);
+      color: oklch(66% 0.02 65);
       max-width: 44ch;
       margin-bottom: 3rem;
     }
@@ -331,7 +331,7 @@
       font-size: 0.88rem;
       font-weight: 300;
       line-height: 1.6;
-      color: oklch(48% 0.02 65);
+      color: oklch(63% 0.02 65);
       max-width: 30ch;
     }
 
@@ -340,7 +340,7 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: oklch(70% 0.018 65);
+      color: oklch(72% 0.018 65);
       margin-bottom: 1.4rem;
     }
 
@@ -354,7 +354,7 @@
     .footer-col a {
       font-size: 0.86rem;
       font-weight: 300;
-      color: oklch(48% 0.02 65);
+      color: oklch(63% 0.02 65);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -370,7 +370,7 @@
     .footer-legal {
       font-size: 0.76rem;
       font-weight: 300;
-      color: oklch(40% 0.018 65);
+      color: oklch(57% 0.018 65);
     }
 
     .footer-mark {
@@ -395,10 +395,93 @@
     .d3 { transition-delay: 0.3s; }
     .d4 { transition-delay: 0.4s; }
 
+    /* ── ACCESSIBILITY ──────────────────────── */
+
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--pad);
+      z-index: 9999;
+      padding: 0.75rem 1.5rem;
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .skip-link:focus { top: 0.75rem; }
+
+    :focus-visible {
+      outline: 2px solid var(--sienna);
+      outline-offset: 3px;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-toggle-bar {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.22s, opacity 0.22s;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      details .faq-answer {
+        transition: none !important;
+      }
+    }
+
     /* ── RESPONSIVE ─────────────────────────── */
 
     @media (max-width: 860px) {
-      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 4.5rem;
+        left: 0;
+        right: 0;
+        background: var(--cream);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem var(--pad) 2rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid oklch(88% 0.016 82);
+        z-index: 99;
+        list-style: none;
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.9rem; }
 
       .page-hero {
         padding-top: 7.5rem;
@@ -428,17 +511,26 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <!-- NAV -->
-<nav>
+<nav aria-label="Main navigation">
   <a href="/" class="nav-logo">interluud</a>
-  <ul class="nav-links">
+  <ul class="nav-links" role="list" id="nav-links-list">
     <li><a href="/blog">Blog</a></li>
     <li><a href="/about">Who We Are</a></li>
     <li><a href="/services">Services</a></li>
-    <li><a href="/faq" class="nav-active">FAQs</a></li>
+    <li><a href="/faq" aria-current="page">FAQs</a></li>
     <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="nav-cta">Book a consult</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links-list">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
 </nav>
+
+<main id="main-content">
 
 <!-- PAGE HERO -->
 <header class="page-hero">
@@ -634,6 +726,8 @@
   </a>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-main">
@@ -676,6 +770,24 @@
   document.querySelectorAll('.page-hero .reveal').forEach((el, i) => {
     setTimeout(() => el.classList.add('in'), 80 + i * 130);
   });
+
+  // Mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navList = document.querySelector('.nav-links');
+  if (navToggle && navList) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navList.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+    });
+    document.addEventListener('click', e => {
+      if (!navToggle.contains(e.target) && !navList.contains(e.target)) {
+        navList.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open navigation');
+      }
+    });
+  }
 </script>
 
 </body>

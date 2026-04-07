@@ -390,7 +390,7 @@
       font-size: clamp(0.9rem, 1.05vw, 1rem);
       font-weight: 300;
       line-height: 1.72;
-      color: oklch(52% 0.02 65);
+      color: oklch(66% 0.02 65);
       max-width: 44ch;
       margin-bottom: 2.25rem;
     }
@@ -447,7 +447,7 @@
     .newsletter-note {
       font-size: 0.75rem;
       font-weight: 300;
-      color: oklch(40% 0.018 65);
+      color: oklch(57% 0.018 65);
       margin-top: 1rem;
     }
 
@@ -480,7 +480,7 @@
       font-size: 0.88rem;
       font-weight: 300;
       line-height: 1.6;
-      color: oklch(48% 0.02 65);
+      color: oklch(63% 0.02 65);
       max-width: 30ch;
     }
 
@@ -489,7 +489,7 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: oklch(70% 0.018 65);
+      color: oklch(72% 0.018 65);
       margin-bottom: 1.4rem;
     }
 
@@ -503,7 +503,7 @@
     .footer-col a {
       font-size: 0.86rem;
       font-weight: 300;
-      color: oklch(48% 0.02 65);
+      color: oklch(63% 0.02 65);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -519,7 +519,7 @@
     .footer-legal {
       font-size: 0.76rem;
       font-weight: 300;
-      color: oklch(40% 0.018 65);
+      color: oklch(57% 0.018 65);
     }
 
     .footer-mark {
@@ -544,10 +544,90 @@
     .d3 { transition-delay: 0.3s; }
     .d4 { transition-delay: 0.4s; }
 
+    /* ── ACCESSIBILITY ──────────────────────── */
+
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--pad);
+      z-index: 9999;
+      padding: 0.75rem 1.5rem;
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .skip-link:focus { top: 0.75rem; }
+
+    :focus-visible {
+      outline: 2px solid var(--sienna);
+      outline-offset: 3px;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-toggle-bar {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.22s, opacity 0.22s;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
     /* ── RESPONSIVE ─────────────────────────── */
 
     @media (max-width: 860px) {
-      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 4.5rem;
+        left: 0;
+        right: 0;
+        background: var(--cream);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem var(--pad) 2rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid oklch(88% 0.016 82);
+        z-index: 99;
+        list-style: none;
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.9rem; }
 
       .blog-hero {
         padding-top: 7.5rem;
@@ -597,17 +677,26 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <!-- NAV -->
-<nav>
+<nav aria-label="Main navigation">
   <a href="/" class="nav-logo">interluud</a>
-  <ul class="nav-links">
-    <li><a href="/blog" class="active">Blog</a></li>
+  <ul class="nav-links" role="list" id="nav-links-list">
+    <li><a href="/blog" aria-current="page">Blog</a></li>
     <li><a href="/about">Who We Are</a></li>
     <li><a href="/services">Services</a></li>
     <li><a href="/faq">FAQs</a></li>
     <li><a href="https://meetings-na2.hubspot.com/gabrielle-san-nicola" class="nav-cta">Book a consult</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links-list">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
 </nav>
+
+<main id="main-content">
 
 <!-- PAGE HERO -->
 <section class="blog-hero">
@@ -620,7 +709,7 @@
 <section class="featured-wrap">
   <p class="featured-label reveal">Featured</p>
   <!-- Link to actual article URL when blog is live -->
-  <a href="#" class="featured-card reveal d1" style="text-decoration: none; color: inherit; display: grid; grid-template-columns: 1fr 1fr; min-height: 420px;">
+  <a href="#" class="featured-card reveal d1" aria-label="Read article: The decisions you make in the first 90 days matter more than you think" style="text-decoration: none; color: inherit; display: grid; grid-template-columns: 1fr 1fr; min-height: 420px;">
     <div class="featured-content">
       <div class="featured-meta">
         <span class="article-category">Divorce &amp; Separation</span>
@@ -632,7 +721,7 @@
         <span class="text-link">Read more</span>
       </div>
     </div>
-    <div class="featured-image"></div>
+    <div class="featured-image" aria-hidden="true"></div>
   </a>
 </section>
 
@@ -641,8 +730,7 @@
   <div class="articles-grid">
 
     <!-- Article 1 -->
-    <!-- Link to actual article URL -->
-    <a href="#" class="article-card reveal">
+    <a href="#" class="article-card reveal" aria-label="Read article: Who are you when the relationship is no longer part of the answer?">
       <span class="card-category">Identity</span>
       <h3 class="card-headline">Who are you when the relationship is no longer part of the answer?</h3>
       <p class="card-excerpt">For high-achievers, a relationship often becomes part of the professional and personal identity. Its ending isn't just emotional. It's an identity crisis. Here's how to begin rebuilding.</p>
@@ -650,8 +738,7 @@
     </a>
 
     <!-- Article 2 -->
-    <!-- Link to actual article URL -->
-    <a href="#" class="article-card reveal d1">
+    <a href="#" class="article-card reveal d1" aria-label="Read article: How to talk to your children about separation without making it worse">
       <span class="card-category">Co-Parenting</span>
       <h3 class="card-headline">How to talk to your children about separation without making it worse</h3>
       <p class="card-excerpt">What you say, and don't say, in the early weeks sets the tone for years of co-parenting. A framework for age-appropriate honesty.</p>
@@ -659,8 +746,7 @@
     </a>
 
     <!-- Article 3 -->
-    <!-- Link to actual article URL -->
-    <a href="#" class="article-card reveal d2">
+    <a href="#" class="article-card reveal d2" aria-label="Read article: The myth of closure: why waiting for it is keeping you stuck">
       <span class="card-category">Breakup Recovery</span>
       <h3 class="card-headline">The myth of closure: why waiting for it is keeping you stuck</h3>
       <p class="card-excerpt">Closure is something we give ourselves, not something that arrives. The sooner you stop waiting for it, the sooner you can move forward.</p>
@@ -668,8 +754,7 @@
     </a>
 
     <!-- Article 4 -->
-    <!-- Link to actual article URL -->
-    <a href="#" class="article-card reveal">
+    <a href="#" class="article-card reveal" aria-label="Read article: Working with a lawyer and a coach at the same time: why it helps">
       <span class="card-category">Divorce &amp; Separation</span>
       <h3 class="card-headline">Working with a lawyer and a coach at the same time: why it helps</h3>
       <p class="card-excerpt">Legal advice tells you what you can do. Coaching helps you decide what you should do. They're not the same thing. They both matter.</p>
@@ -677,8 +762,7 @@
     </a>
 
     <!-- Article 5 -->
-    <!-- Link to actual article URL -->
-    <a href="#" class="article-card reveal d1">
+    <a href="#" class="article-card reveal d1" aria-label="Read article: Rebuilding a social life after a long-term relationship ends">
       <span class="card-category">Identity</span>
       <h3 class="card-headline">Rebuilding a social life after a long-term relationship ends</h3>
       <p class="card-excerpt">When a relationship ends, so do shared friendships, shared routines, and shared identity. Starting over socially is harder than anyone admits.</p>
@@ -686,8 +770,7 @@
     </a>
 
     <!-- Article 6 -->
-    <!-- Link to actual article URL -->
-    <a href="#" class="article-card reveal d2">
+    <a href="#" class="article-card reveal d2" aria-label="Read article: Why high-achievers are terrible at asking for help, and what to do about it">
       <span class="card-category">Wellbeing</span>
       <h3 class="card-headline">Why high-achievers are terrible at asking for help, and what to do about it</h3>
       <p class="card-excerpt">The same drive that built your career may be the thing making your transition harder. On the counterintuitive skill of accepting support.</p>
@@ -722,6 +805,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-main">
@@ -748,7 +833,7 @@
   </div>
   <div class="footer-bottom">
     <p class="footer-legal">© 2025 interluud. All rights reserved.</p>
-    <div class="footer-mark"></div>
+    <div class="footer-mark" aria-hidden="true"></div>
   </div>
 </footer>
 
@@ -764,6 +849,24 @@
   document.querySelectorAll('.blog-hero .reveal').forEach((el, i) => {
     setTimeout(() => el.classList.add('in'), 80 + i * 130);
   });
+
+  // Mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navList = document.querySelector('.nav-links');
+  if (navToggle && navList) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navList.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+    });
+    document.addEventListener('click', e => {
+      if (!navToggle.contains(e.target) && !navList.contains(e.target)) {
+        navList.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open navigation');
+      }
+    });
+  }
 </script>
 
 </body>
